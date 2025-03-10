@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Army Builder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Army Builder</h1>
+        
+        <div class="army-setup">
+            <div class="form-group">
+                <label for="faction-select">Select Faction:</label>
+                <select id="faction-select">
+                    <option value="skaven">Skaven</option>
+                    <!-- More factions would be added here -->
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="points-input">Army Points:</label>
+                <input type="number" id="points-input" min="500" step="500" value="1000">
+                <button id="set-points-btn">Set Points</button>
+            </div>
+            
+            <div class="points-summary">
+                <div>Points Available: <span id="points-available">1000</span></div>
+                <div>Points Used: <span id="points-used">0</span></div>
+                <div>Heroes Required: <span id="heroes-required">2</span></div>
+                <div>Heroes Selected: <span id="heroes-selected">0</span></div>
+            </div>
+        </div>
+        
+        <div class="army-builder">
+            <div class="units-container">
+                <h2>Available Units</h2>
+                <div class="filter-options">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="hero">Heroes</button>
+                    <button class="filter-btn" data-filter="unit">Units</button>
+                </div>
+                <div id="available-units" class="units-list"></div>
+            </div>
+            
+            <div class="selected-container">
+                <h2>Selected Units</h2>
+                <div id="selected-units" class="units-list"></div>
+            </div>
+        </div>
+        
+        <div class="rules-reference">
+            <h2>Rules Reference</h2>
+            <div id="rules-list"></div>
+        </div>
+    </div>
+    
+    <template id="unit-card-template">
+        <div class="unit-card">
+            <div class="unit-header">
+                <h3 class="unit-name"></h3>
+                <div class="unit-cost"></div>
+            </div>
+            <div class="unit-stats">
+                <div class="stat"><span class="stat-label">Size:</span> <span class="unit-size"></span></div>
+                <div class="stat"><span class="stat-label">Quality:</span> <span class="unit-quality"></span></div>
+                <div class="stat"><span class="stat-label">Attack:</span> <span class="unit-attack"></span></div>
+                <div class="stat"><span class="stat-label">Armor:</span> <span class="unit-armor"></span></div>
+                <div class="stat"><span class="stat-label">Tough:</span> <span class="unit-tough"></span></div>
+                <div class="stat"><span class="stat-label">Equipment:</span> <span class="unit-equipment"></span></div>
+                <div class="stat"><span class="stat-label">Special Rules:</span> <span class="unit-rules"></span></div>
+            </div>
+            <div class="unit-actions">
+                <button class="add-unit-btn">Add</button>
+                <div class="quantity-controls">
+                    <button class="decrease-btn">-</button>
+                    <span class="quantity">0</span>
+                    <button class="increase-btn">+</button>
+                </div>
+                <button class="remove-unit-btn">Remove</button>
+            </div>
+        </div>
+    </template>
+    
+    <script src="data/rules.json" type="application/json" id="rules-data"></script>
+    <script src="data/factions.json" type="application/json" id="factions-data"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

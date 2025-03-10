@@ -1,0 +1,231 @@
+{
+  "skaven": {
+    "name": "Skaven",
+    "units": [
+      {
+        "name": "Clanrats",
+        "size": 3,
+        "cost": 40,
+        "quality": "6+",
+        "attack": "2",
+        "armor": "3",
+        "tough": "3",
+        "equipment": "Spears (A3)",
+        "special": ["Expendable", "Spear Wall"],
+        "type": "unit"
+      },
+      {
+        "name": "Packmaster",
+        "size": 1,
+        "cost": 50,
+        "quality": "4+",
+        "attack": "2",
+        "armor": "0",
+        "tough": "1",
+        "equipment": "",
+        "special": ["Hero", "Under the Lash"],
+        "type": "hero"
+      },
+      {
+        "name": "Warlock Engineer",
+        "size": 1,
+        "cost": 50,
+        "quality": "4+",
+        "attack": "0/1",
+        "armor": "0",
+        "tough": "1",
+        "equipment": "",
+        "special": ["Hero"],
+        "type": "hero"
+      },
+      {
+        "name": "Grey Seer",
+        "size": 1,
+        "cost": 150,
+        "quality": "3+",
+        "attack": "1",
+        "armor": "2",
+        "tough": "1",
+        "equipment": "",
+        "special": ["Wizard(2)"],
+        "type": "hero"
+      },
+      {
+        "name": "Warlord",
+        "size": 1,
+        "cost": 75,
+        "quality": "4+",
+        "attack": "3",
+        "armor": "1",
+        "tough": "1",
+        "equipment": "",
+        "special": ["Hero", "Under the Lash"],
+        "type": "hero"
+      },
+      {
+        "name": "Plague Monks",
+        "size": 3,
+        "cost": 55,
+        "quality": "5+",
+        "attack": "2",
+        "armor": "4",
+        "tough": "3",
+        "equipment": "Flails (A4)",
+        "special": ["Fearless", "Furious"],
+        "type": "unit"
+      },
+      {
+        "name": "Warpfire Throwers",
+        "size": 3,
+        "cost": 125,
+        "quality": "5+",
+        "attack": "2",
+        "armor": "5",
+        "tough": "3",
+        "equipment": "Warpfire Throwers (A5, AP(2))",
+        "special": ["Fear"],
+        "type": "unit"
+      },
+      {
+        "name": "Skavenslaves",
+        "size": 3,
+        "cost": 30,
+        "quality": "6+",
+        "attack": "2/1",
+        "armor": "2",
+        "tough": "3",
+        "equipment": "Hand Weapons (A2), Slings (4\", A1)",
+        "special": ["Expendable"],
+        "type": "unit"
+      },
+      {
+        "name": "Poison Wind Globadiers",
+        "size": 3,
+        "cost": 135,
+        "quality": "5+",
+        "attack": "3/2",
+        "armor": "3",
+        "tough": "3",
+        "equipment": "Hand Weapons (A3), Poison Globes (4\", A2, AP(1), Deadly(2))",
+        "special": [],
+        "type": "unit"
+      },
+      {
+        "name": "Warplock Jezzails",
+        "size": 3,
+        "cost": 65,
+        "quality": "5+",
+        "attack": "2/1",
+        "armor": "2",
+        "tough": "2",
+        "equipment": "Hand Weapons (A2), Warplock Rifles (12\", A1, AP(2))",
+        "special": ["Slow", "Stealth"],
+        "type": "unit"
+      },
+      {
+        "name": "Warp Lightning Cannons",
+        "size": 2,
+        "cost": 110,
+        "quality": "5+",
+        "attack": "2/D6",
+        "armor": "2",
+        "tough": "2",
+        "equipment": "Crew Attacks (A2), Warp Lighting Cannons (12\", A(D6), AP(2), Deadly(2))",
+        "special": ["Artillery", "Slow", "Unpredictable"],
+        "type": "unit"
+      },
+      {
+        "name": "Doomwheels",
+        "size": 1,
+        "cost": 250,
+        "quality": "5+",
+        "attack": "3/D6",
+        "armor": "5",
+        "tough": "5",
+        "equipment": "Crew Attacks (A3, AP(1)), Warp Lighting Cannons (12\", A(D6), AP(2), Deadly(2))",
+        "special": ["Fast", "Fear", "Impact(3)", "Spear Wall", "Unpredictable"],
+        "type": "unit"
+      },
+      {
+        "name": "Plagueclaw Catapults",
+        "size": 2,
+        "cost": 85,
+        "quality": "5+",
+        "attack": "2/3",
+        "armor": "2",
+        "tough": "2",
+        "equipment": "Crew Attacks (A2), Plagueclaw Catapult (12\", A3, Blast(2), Indirect)",
+        "special": ["Artillery", "Slow"],
+        "type": "unit"
+      },
+      {
+        "name": "Hell Pit Abominations",
+        "size": 1,
+        "cost": 175,
+        "quality": "5+",
+        "attack": "4",
+        "armor": "5",
+        "tough": "5",
+        "equipment": "Massive Claws and Teeth (A5, AP(2), Deadly(2))",
+        "special": ["Fear", "Fearless", "Furious", "Regeneration"],
+        "type": "unit"
+      },
+      {
+        "name": "Night Runners",
+        "size": 3,
+        "cost": 100,
+        "quality": "3+",
+        "attack": "3/2",
+        "armor": "3",
+        "tough": "3",
+        "equipment": "Hand Weapons (A3), Throwing Weapons (4\", A2)",
+        "special": ["Furious", "Ambush", "Scout", "Stealth"],
+        "type": "unit"
+      },
+      {
+        "name": "Ratling Gun Teams",
+        "size": 3,
+        "cost": 120,
+        "quality": "5+",
+        "attack": "2/3",
+        "armor": "3",
+        "tough": "3",
+        "equipment": "Hand Weapons (A2), Ratling Guns (8\", A3, AP(1), Onslaught(6+))",
+        "special": [],
+        "type": "unit"
+      },
+      {
+        "name": "Stormvermin",
+        "size": 3,
+        "cost": 60,
+        "quality": "5+",
+        "attack": "4",
+        "armor": "3",
+        "tough": "3",
+        "equipment": "Halberds (A3, AP(1))",
+        "special": ["Fearless"],
+        "type": "unit"
+      },
+      {
+        "name": "Rat Ogres",
+        "size": 3,
+        "cost": 120,
+        "quality": "5+",
+        "attack": "3",
+        "armor": "4",
+        "tough": "4",
+        "equipment": "Claws and Teeth (A4, AP(1))",
+        "special": ["Fear", "Fearless", "Furious"],
+        "type": "unit"
+      }
+    ],
+    "spells": [
+      {"name": "Filth", "difficulty": "3+", "effect": "Target friendly unit gains Poison on melee attacks until the end of turn."},
+      {"name": "Skitterleap", "difficulty": "3+", "effect": "Caster is moved anywhere onto the game board."},
+      {"name": "Death Frenzy", "difficulty": "4+", "effect": "Target friendly unit within 8\" and in base contact with an enemy unit gain +D6 attacks until the end of turn."},
+      {"name": "Sickness", "difficulty": "4+", "effect": "Target enemy unit suffers -1 attack per base for all attack rolls until the end of the turn."},
+      {"name": "Rat Plague", "difficulty": "5+", "effect": "Caster gains Rat Plague (4\", A10) until the end of the turn."},
+      {"name": "Warp Lightning", "difficulty": "5+", "effect": "Caster gains Warp Lightning (12\", A(D6), AP(2), Deadly(2)) until the end of the turn."}
+    ]
+  }
+}
