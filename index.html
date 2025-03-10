@@ -63,13 +63,32 @@
                 <div class="unit-cost"></div>
             </div>
             <div class="unit-stats">
-                <div class="stat"><span class="stat-label">Size:</span> <span class="unit-size"></span></div>
-                <div class="stat"><span class="stat-label">Quality:</span> <span class="unit-quality"></span></div>
-                <div class="stat"><span class="stat-label">Attack:</span> <span class="unit-attack"></span></div>
-                <div class="stat"><span class="stat-label">Armor:</span> <span class="unit-armor"></span></div>
-                <div class="stat"><span class="stat-label">Tough:</span> <span class="unit-tough"></span></div>
-                <div class="stat"><span class="stat-label">Equipment:</span> <span class="unit-equipment"></span></div>
-                <div class="stat"><span class="stat-label">Special Rules:</span> <span class="unit-rules"></span></div>
+                <!-- Row 1: Stat Labels -->
+                <div class="stats-row labels-row">
+                    <div class="stat-label">Size</div>
+                    <div class="stat-label">Quality</div>
+                    <div class="stat-label">Attack</div>
+                    <div class="stat-label">Armor</div>
+                    <div class="stat-label">Tough</div>
+                </div>
+                <!-- Row 2: Stat Values -->
+                <div class="stats-row values-row">
+                    <div class="stat-value unit-size"></div>
+                    <div class="stat-value unit-quality"></div>
+                    <div class="stat-value unit-attack"></div>
+                    <div class="stat-value unit-armor"></div>
+                    <div class="stat-value unit-tough"></div>
+                </div>
+                <!-- Row 3: Equipment -->
+                <div class="equipment-row">
+                    <div class="equip-label">Equipment:</div>
+                    <div class="equip-value unit-equipment"></div>
+                </div>
+                <!-- Row 4: Special Rules -->
+                <div class="rules-row">
+                    <div class="rules-label">Special Rules:</div>
+                    <div class="rules-value unit-rules"></div>
+                </div>
             </div>
             <div class="unit-actions">
                 <button class="add-unit-btn">Add</button>
