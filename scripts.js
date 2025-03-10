@@ -616,6 +616,178 @@ document.addEventListener('DOMContentLoaded', function () {
         linkElement.click();
     }
 
+    function exportArmyListAsPdf() {
+        // Create a new jsPDF instance
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Set initial position
+        let y = 20;
+
+        // Add title
+        doc.setFontSize(20);
+        doc.setFont('helvetica', 'bold');
+        const factionName = factionData[currentFaction].name;
+        doc.text(`${factionName} Army List (${usedPoints}/${armyPoints} pts)`, 105, y, { align: 'center' });
+        y += 15;
+
+        // Add date
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        const today = new Date().toLocaleDateString();
+        doc.text(`Generated on: ${today}`, 105, y, { align: 'center' });
+        y += 15;
+
+        // Group units by type
+        const heroes = selectedUnitsList.filter(unit => unit.type === 'hero');
+        const regularUnits = selectedUnitsList.filter(unit => unit.type === 'unit');
+
+        // Function to add a section of units
+        function addUnitsSection(title, units) {
+            if (units.length === 0) return;
+
+            // Check if need new page
+            if (y > 250) {
+                doc.addPage();
+                y = 20;
+            }
+
+            // Add section header
+            doc.setFontSize(16);
+            doc.setFont('helvetica', 'bold');
+            doc.text(title, 14, y);
+            y += 8;
+
+            // Add table header
+            doc.setFontSize(10);
+            doc.setDrawColor(0);
+            doc.setFillColor(240, 240, 240);
+            doc.rect(10, y, 190, 7, 'F');
+            doc.text("Unit", 14, y + 5);
+            doc.text("Qty", 70, y + 5);
+            doc.text("Cost", 85, y + 5);
+            doc.text("Stats", 105, y + 5);
+            doc.text("Special Rules", 150, y + 5);
+            y += 10;
+
+            // Add units
+            units.forEach(unit => {
+                // Check if we need a new page
+                if (y > 270) {
+                    doc.addPage();
+                    y = 20;
+                }
+
+                const unitHeight = 7;
+                doc.setFont('helvetica', 'bold');
+                doc.text(unit.name, 14, y + 5);
+                doc.setFont('helvetica', 'normal');
+                doc.text(unit.quantity.toString(), 70, y + 5);
+                doc.text(`${unit.totalCost} pts`, 85, y + 5);
+
+                // Stats
+                const stats = `Size: ${unit.size}, Qual: ${unit.quality}, Atk: ${unit.attack}, Arm: ${unit.armor}, Tough: ${unit.tough}`;
+                doc.text(stats, 105, y + 5);
+
+                // Special rules (handle longer text)
+                const specialRules = unit.special.join(', ');
+                if (specialRules.length > 40) {
+                    const firstLine = specialRules.substring(0, 40) + "...";
+                    doc.text(firstLine, 150, y + 5);
+                } else {
+                    doc.text(specialRules, 150, y + 5);
+                }
+
+                // Draw lines
+                doc.setDrawColor(200, 200, 200);
+                doc.line(10, y + unitHeight, 200, y + unitHeight);
+
+                y += unitHeight + 3;
+
+                // Add equipment on next line if available
+                if (unit.equipment && unit.equipment.length > 0) {
+                    doc.text(`Equipment: ${unit.equipment}`, 20, y + 3);
+                    y += 8;
+                }
+            });
+
+            y += 10; // Add some space after the section
+        }
+
+        // Add heroes and units sections
+        addUnitsSection("HEROES", heroes);
+        addUnitsSection("UNITS", regularUnits);
+
+        // Add rules summary if fits
+        if (y < 240 && selectedUnitsList.length > 0) {
+            // Get all unique special rules used by selected units
+            const usedRules = new Set();
+            selectedUnitsList.forEach(unit => {
+                unit.special.forEach(rule => {
+                    if (rule.includes('(')) {
+                        // Extract base rule name without parameters
+                        const baseName = rule.substring(0, rule.indexOf('('));
+                        usedRules.add(baseName);
+                    } else {
+                        usedRules.add(rule);
+                    }
+                });
+            });
+
+            // Add rules section if there are rules to display
+            if (usedRules.size > 0) {
+                doc.setFontSize(16);
+                doc.setFont('helvetica', 'bold');
+                doc.text("SPECIAL RULES REFERENCE", 14, y);
+                y += 8;
+
+                // Add each rule
+                doc.setFontSize(9);
+                usedRules.forEach(rule => {
+                    if (y > 270) {
+                        doc.addPage();
+                        y = 20;
+                    }
+
+                    if (rulesData[rule]) {
+                        doc.setFont('helvetica', 'bold');
+                        doc.text(rule, 14, y);
+                        doc.setFont('helvetica', 'normal');
+
+                        // Handle long rule descriptions
+                        const description = rulesData[rule];
+                        const maxWidth = 180;
+                        const lines = doc.splitTextToSize(description, maxWidth);
+                        doc.text(lines, 14, y + 4);
+
+                        y += 4 + (lines.length * 4) + 2;
+                    }
+                });
+            }
+        }
+
+        // Save the PDF
+        doc.save(`${currentFaction}-army-list.pdf`);
+    }
+
+    // Add export PDF button
+    function addExportPdfButton() {
+        const exportPdfBtn = document.createElement('button');
+        exportPdfBtn.textContent = 'Export as PDF';
+        exportPdfBtn.id = 'export-pdf-btn';
+        exportPdfBtn.addEventListener('click', exportArmyListAsPdf);
+
+        const container = document.querySelector('.selected-container');
+
+        // Add after export JSON button
+        const exportJsonBtn = document.getElementById('export-btn');
+        if (exportJsonBtn) {
+            container.insertBefore(exportPdfBtn, exportJsonBtn.nextSibling);
+        } else {
+            container.insertBefore(exportPdfBtn, container.firstChild.nextSibling);
+        }
+    }
+
     // Add export button
     function addExportButton() {
         const exportBtn = document.createElement('button');
@@ -642,10 +814,24 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initialize extra features
     function initExtraFeatures() {
         addExportButton();
+        addExportPdfButton();
         addValidationStyles();
     }
 
     // Start the application
     loadData();
     initExtraFeatures();
+
+
 });
+
+// First, add the jsPDF library to your index.html
+// Add this line in the <head> section of index.html
+// <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+// Now let's modify your scripts.js file to add PDF export functionality
+// Add this function after the exportArmyList function
+
+
+
+// Modify initExtraFeatures to add PDF export button
