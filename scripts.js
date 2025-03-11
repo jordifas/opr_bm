@@ -23,24 +23,27 @@ document.addEventListener('DOMContentLoaded', function () {
     let selectedUnitsList = [];
 
     // Load data
-    async function loadData() {
-        try {
-            // In a real application, these would be actual fetch requests
-            // For this demo, we'll use inline data based on the PDF
-            const factionsResponse = await fetch('data/factions.json');
-            const rulesResponse = await fetch('data/rules.json');
+const baseUrl = "https://jordifas.github.io/opr_bm/data/";
 
-            factionData = await factionsResponse.json();
-            rulesData = await rulesResponse.json();
+async function loadData() {
+    try {
+        const factionsResponse = await fetch(baseUrl + "factions.json");
+        const rulesResponse = await fetch(baseUrl + "rules.json");
 
-            initializeApp();
-        } catch (error) {
-            console.error('Error loading data:', error);
-            // For demo purposes, we'll use hardcoded data if fetch fails
-            useHardcodedData();
-            initializeApp();
+        if (!factionsResponse.ok || !rulesResponse.ok) {
+            throw new Error("Failed to fetch JSON files.");
         }
+
+        factionData = await factionsResponse.json();
+        rulesData = await rulesResponse.json();
+
+        initializeApp();
+    } catch (error) {
+        console.error("Error loading data:", error);
+        useHardcodedData();
+        initializeApp();
     }
+}
 
     // Use hardcoded data if fetch fails (for demo)
     function useHardcodedData() {
