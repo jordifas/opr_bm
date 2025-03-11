@@ -305,6 +305,7 @@
     ]
   },
   "VampireCounts": {
+    "name": "Vampire Counts",
     "units": [
       {
         "name": "Vampire",
@@ -554,6 +555,7 @@
     ]
   },
   "Lizardmen": {
+    "name": "Lizardmen",
     "units": [
       {
         "name": "Sauraus Veteran",
@@ -791,6 +793,7 @@
     ]
   },
   "Empire": {
+    "name": "Empire",
     "units": [
       {
         "name": "Captain",
