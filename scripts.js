@@ -126,21 +126,44 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Render the rules list
-    function renderRulesList() {
+    function renderUsedRulesList() {
         rulesList.innerHTML = '';
+    
+        // Get all unique special rules used by selected units
+        const usedRules = new Set();
+        selectedUnitsList.forEach(unit => {
+            if (Array.isArray(unit.special)) {
+                unit.special.forEach(rule => {
+                    // Extract base rule name without parameters
+                    let baseName = rule;
+                    if (rule.includes('(')) {
+                        baseName = rule.substring(0, rule.indexOf('(')).trim();
+                    }
+                    usedRules.add(baseName);
+                    usedRules.add(rule); // Also add the rule with parameters
+                });
+            }
+        });
 
-        for (const [ruleName, ruleDescription] of Object.entries(rulesData)) {
-            const ruleElement = document.createElement('div');
-            ruleElement.className = 'rule-item';
-
-            ruleElement.innerHTML = `
-                <div class="rule-name">${ruleName}</div>
-                <div class="rule-description">${ruleDescription}</div>
-            `;
-
-            rulesList.appendChild(ruleElement);
+    // Expand rules if there are parameterized versions in the dataset
+    const expandedRules = new Set(usedRules);
+    universalRules.forEach(rule => {
+        if (typeof rule === 'string' && rule.includes('(')) {
+            const baseName = rule.substring(0, rule.indexOf('(')).trim();
+            if (usedRules.has(baseName)) {
+                expandedRules.add(rule);
+            }
         }
-    }
+    });
+
+    // Render the final list
+    expandedRules.forEach(rule => {
+        const li = document.createElement('li');
+        li.textContent = rule;
+        rulesList.appendChild(li);
+    });
+}
+
 
     // Render only the rules used in selected units
     function renderUsedRulesList() {
