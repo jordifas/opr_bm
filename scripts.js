@@ -351,6 +351,7 @@ async function loadData() {
     function changeFaction() {
         currentFaction = factionSelect.value;
         renderUnitsList();
+        console.log(currentFaction);
 
         // Reset selected units when changing faction
         selectedUnitsList = [];
