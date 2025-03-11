@@ -126,74 +126,65 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Render the rules list
-    function renderUsedRulesList() {
+    function renderRulesList() {
         rulesList.innerHTML = '';
-    
-        // Get all unique special rules used by selected units
-        const usedRules = new Set();
-        selectedUnitsList.forEach(unit => {
-            if (Array.isArray(unit.special)) {
-                unit.special.forEach(rule => {
-                    // Extract base rule name without parameters
-                    let baseName = rule;
-                    if (rule.includes('(')) {
-                        baseName = rule.substring(0, rule.indexOf('(')).trim();
-                    }
-                    usedRules.add(baseName);
-                    usedRules.add(rule); // Also add the rule with parameters
-                });
-            }
-        });
 
-    // Expand rules if there are parameterized versions in the dataset
-    const expandedRules = new Set(usedRules);
-    universalRules.forEach(rule => {
-        if (typeof rule === 'string' && rule.includes('(')) {
-            const baseName = rule.substring(0, rule.indexOf('(')).trim();
-            if (usedRules.has(baseName)) {
-                expandedRules.add(rule);
-            }
+        for (const [ruleName, ruleDescription] of Object.entries(rulesData)) {
+            const ruleElement = document.createElement('div');
+            ruleElement.className = 'rule-item';
+
+            ruleElement.innerHTML = `
+                <div class="rule-name">${ruleName}</div>
+                <div class="rule-description">${ruleDescription}</div>
+            `;
+
+            rulesList.appendChild(ruleElement);
         }
-    });
-
-    // Render the final list
-    expandedRules.forEach(rule => {
-        const li = document.createElement('li');
-        li.textContent = rule;
-        rulesList.appendChild(li);
-    });
-}
-
+    }
 
     // Render only the rules used in selected units
     function renderUsedRulesList() {
         rulesList.innerHTML = '';
 
         // Get all unique special rules used by selected units
-        const usedRules = new Set();
+        const usedRules = new Map(); // Store rule base name and parameter (if any)
+
         selectedUnitsList.forEach(unit => {
             if (Array.isArray(unit.special)) {
                 unit.special.forEach(rule => {
-                    // Extract base rule name without parameters
-                    if (rule.includes('(')) {
-                        const baseName = rule.substring(0, rule.indexOf('(')).trim();
-                        usedRules.add(baseName);
+                    let baseName, param = null;
+
+                    // Extract base rule name and parameter if present
+                    const match = rule.match(/^(.+?)\((\d+)\)$/);
+                    if (match) {
+                        baseName = match[1].trim();
+                        param = match[2]; // Store the parameter (e.g., 1 in rule(1))
                     } else {
-                        usedRules.add(rule);
+                        baseName = rule.trim();
                     }
+
+                    // Store the rule along with its parameter
+                    usedRules.set(baseName, param);
                 });
             }
         });
 
         // Create elements for each used rule
-        usedRules.forEach(ruleName => {
-            if (rulesData[ruleName]) {
+        usedRules.forEach((param, ruleName) => {
+            let ruleDescription = rulesData[ruleName] || rulesData[`${ruleName}(X)`]; // Check normal and parameterized rule
+
+            if (ruleDescription) {
+                if (param !== null) {
+                    // Replace placeholder 'X' with actual parameter value
+                    ruleDescription = ruleDescription.replace(/\bX\b/g, param);
+                }
+
                 const ruleElement = document.createElement('div');
                 ruleElement.className = 'rule-item';
 
                 ruleElement.innerHTML = `
-                    <div class="rule-name">${ruleName}</div>
-                    <div class="rule-description">${rulesData[ruleName]}</div>
+                    <div class="rule-name">${ruleName}${param !== null ? ` (${param})` : ''}</div>
+                    <div class="rule-description">${ruleDescription}</div>
                 `;
 
                 rulesList.appendChild(ruleElement);
@@ -220,6 +211,8 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     }
+
+
 
     // Render the units list
     function renderUnitsList() {
