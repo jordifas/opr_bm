@@ -11,7 +11,10 @@
         "armor": "3",
         "tough": "3",
         "equipment": "Spears (A3)",
-        "special": ["Expendable", "Spear Wall"],
+        "special": [
+          "Expendable",
+          "Spear Wall"
+        ],
         "type": "unit"
       },
       {
@@ -23,7 +26,10 @@
         "armor": "0",
         "tough": "1",
         "equipment": "",
-        "special": ["Hero", "Under the Lash"],
+        "special": [
+          "Hero",
+          "Under the Lash"
+        ],
         "type": "hero"
       },
       {
@@ -35,7 +41,9 @@
         "armor": "0",
         "tough": "1",
         "equipment": "",
-        "special": ["Hero"],
+        "special": [
+          "Hero"
+        ],
         "type": "hero"
       },
       {
@@ -47,7 +55,9 @@
         "armor": "2",
         "tough": "1",
         "equipment": "",
-        "special": ["Wizard(2)"],
+        "special": [
+          "Wizard(2)"
+        ],
         "type": "hero"
       },
       {
@@ -59,7 +69,10 @@
         "armor": "1",
         "tough": "1",
         "equipment": "",
-        "special": ["Hero", "Under the Lash"],
+        "special": [
+          "Hero",
+          "Under the Lash"
+        ],
         "type": "hero"
       },
       {
@@ -71,7 +84,10 @@
         "armor": "4",
         "tough": "3",
         "equipment": "Flails (A4)",
-        "special": ["Fearless", "Furious"],
+        "special": [
+          "Fearless",
+          "Furious"
+        ],
         "type": "unit"
       },
       {
@@ -83,7 +99,9 @@
         "armor": "5",
         "tough": "3",
         "equipment": "Warpfire Throwers (A5, AP(2))",
-        "special": ["Fear"],
+        "special": [
+          "Fear"
+        ],
         "type": "unit"
       },
       {
@@ -95,7 +113,9 @@
         "armor": "2",
         "tough": "3",
         "equipment": "Hand Weapons (A2), Slings (4\", A1)",
-        "special": ["Expendable"],
+        "special": [
+          "Expendable"
+        ],
         "type": "unit"
       },
       {
@@ -119,7 +139,10 @@
         "armor": "2",
         "tough": "2",
         "equipment": "Hand Weapons (A2), Warplock Rifles (12\", A1, AP(2))",
-        "special": ["Slow", "Stealth"],
+        "special": [
+          "Slow",
+          "Stealth"
+        ],
         "type": "unit"
       },
       {
@@ -131,7 +154,11 @@
         "armor": "2",
         "tough": "2",
         "equipment": "Crew Attacks (A2), Warp Lighting Cannons (12\", A(D6), AP(2), Deadly(2))",
-        "special": ["Artillery", "Slow", "Unpredictable"],
+        "special": [
+          "Artillery",
+          "Slow",
+          "Unpredictable"
+        ],
         "type": "unit"
       },
       {
@@ -143,7 +170,13 @@
         "armor": "5",
         "tough": "5",
         "equipment": "Crew Attacks (A3, AP(1)), Warp Lighting Cannons (12\", A(D6), AP(2), Deadly(2))",
-        "special": ["Fast", "Fear", "Impact(3)", "Spear Wall", "Unpredictable"],
+        "special": [
+          "Fast",
+          "Fear",
+          "Impact(3)",
+          "Spear Wall",
+          "Unpredictable"
+        ],
         "type": "unit"
       },
       {
@@ -155,7 +188,10 @@
         "armor": "2",
         "tough": "2",
         "equipment": "Crew Attacks (A2), Plagueclaw Catapult (12\", A3, Blast(2), Indirect)",
-        "special": ["Artillery", "Slow"],
+        "special": [
+          "Artillery",
+          "Slow"
+        ],
         "type": "unit"
       },
       {
@@ -167,7 +203,12 @@
         "armor": "5",
         "tough": "5",
         "equipment": "Massive Claws and Teeth (A5, AP(2), Deadly(2))",
-        "special": ["Fear", "Fearless", "Furious", "Regeneration"],
+        "special": [
+          "Fear",
+          "Fearless",
+          "Furious",
+          "Regeneration"
+        ],
         "type": "unit"
       },
       {
@@ -179,7 +220,12 @@
         "armor": "3",
         "tough": "3",
         "equipment": "Hand Weapons (A3), Throwing Weapons (4\", A2)",
-        "special": ["Furious", "Ambush", "Scout", "Stealth"],
+        "special": [
+          "Furious",
+          "Ambush",
+          "Scout",
+          "Stealth"
+        ],
         "type": "unit"
       },
       {
@@ -203,7 +249,9 @@
         "armor": "3",
         "tough": "3",
         "equipment": "Halberds (A3, AP(1))",
-        "special": ["Fearless"],
+        "special": [
+          "Fearless"
+        ],
         "type": "unit"
       },
       {
@@ -215,17 +263,816 @@
         "armor": "4",
         "tough": "4",
         "equipment": "Claws and Teeth (A4, AP(1))",
-        "special": ["Fear", "Fearless", "Furious"],
+        "special": [
+          "Fear",
+          "Fearless",
+          "Furious"
+        ],
         "type": "unit"
       }
     ],
     "spells": [
-      {"name": "Filth", "difficulty": "3+", "effect": "Target friendly unit gains Poison on melee attacks until the end of turn."},
-      {"name": "Skitterleap", "difficulty": "3+", "effect": "Caster is moved anywhere onto the game board."},
-      {"name": "Death Frenzy", "difficulty": "4+", "effect": "Target friendly unit within 8\" and in base contact with an enemy unit gain +D6 attacks until the end of turn."},
-      {"name": "Sickness", "difficulty": "4+", "effect": "Target enemy unit suffers -1 attack per base for all attack rolls until the end of the turn."},
-      {"name": "Rat Plague", "difficulty": "5+", "effect": "Caster gains Rat Plague (4\", A10) until the end of the turn."},
-      {"name": "Warp Lightning", "difficulty": "5+", "effect": "Caster gains Warp Lightning (12\", A(D6), AP(2), Deadly(2)) until the end of the turn."}
+      {
+        "name": "Filth",
+        "difficulty": "3+",
+        "effect": "Target friendly unit gains Poison on melee attacks until the end of turn."
+      },
+      {
+        "name": "Skitterleap",
+        "difficulty": "3+",
+        "effect": "Caster is moved anywhere onto the game board."
+      },
+      {
+        "name": "Death Frenzy",
+        "difficulty": "4+",
+        "effect": "Target friendly unit within 8\" and in base contact with an enemy unit gain +D6 attacks until the end of turn."
+      },
+      {
+        "name": "Sickness",
+        "difficulty": "4+",
+        "effect": "Target enemy unit suffers -1 attack per base for all attack rolls until the end of the turn."
+      },
+      {
+        "name": "Rat Plague",
+        "difficulty": "5+",
+        "effect": "Caster gains Rat Plague (4\", A10) until the end of the turn."
+      },
+      {
+        "name": "Warp Lightning",
+        "difficulty": "5+",
+        "effect": "Caster gains Warp Lightning (12\", A(D6), AP(2), Deadly(2)) until the end of the turn."
+      }
+    ]
+  },
+  "VampireCounts": {
+    "units": [
+      {
+        "name": "Vampire",
+        "specialRules": "Fear, Hero",
+        "cost": 75,
+        "quality": "3+",
+        "attack": 3,
+        "leadership": 1,
+        "type": "hero"
+      },
+      {
+        "name": "Necromancer",
+        "specialRules": "Wizard(1)",
+        "cost": 75,
+        "quality": "3+",
+        "attack": 0,
+        "leadership": 1,
+        "type": "hero"
+      },
+      {
+        "name": "Wraith King",
+        "specialRules": "Hero",
+        "cost": 50,
+        "quality": "4+",
+        "attack": 2,
+        "leadership": 0,
+        "type": "hero"
+      },
+      {
+        "name": "Master Necromancer",
+        "specialRules": "Wizard(2)",
+        "cost": 150,
+        "quality": "3+",
+        "attack": 0,
+        "leadership": 3,
+        "type": "hero"
+      },
+      {
+        "name": "Vampire Lord",
+        "specialRules": "Fear, Hero, Winged Nightmare Mount, Wizard(1)",
+        "cost": 200,
+        "quality": "2+",
+        "attack": 5,
+        "leadership": 3,
+        "type": "hero"
+      },
+      {
+        "name": "Zombies",
+        "size": 3,
+        "equipment": "Hands and Teeth (A2)",
+        "specialRules": "Horde, Slow, Undead",
+        "cost": 25,
+        "quality": "6+",
+        "attack": 2,
+        "armor": 2,
+        "toughness": 4,
+        "type": "unit"
+      },
+      {
+        "name": "Skeleton Warriors",
+        "size": 3,
+        "equipment": "Hand Weapons (A3)",
+        "specialRules": "Undead",
+        "cost": 35,
+        "quality": "5+",
+        "attack": 3,
+        "armor": 3,
+        "toughness": 3,
+        "type": "unit"
+      },
+      {
+        "name": "Grave Guard",
+        "size": 3,
+        "equipment": "Great Weapons (A3, AP(2))",
+        "specialRules": "Undead",
+        "cost": 75,
+        "quality": "4+",
+        "attack": 4,
+        "armor": 3,
+        "toughness": 3,
+        "type": "unit"
+      },
+      {
+        "name": "Black Knights",
+        "size": 3,
+        "equipment": "Lances (A3)",
+        "specialRules": "Fast, Impact(1), Undead",
+        "cost": 80,
+        "quality": "4+",
+        "attack": 4,
+        "armor": 3,
+        "toughness": 3,
+        "type": "unit"
+      },
+      {
+        "name": "Crypt Ghouls",
+        "size": 3,
+        "equipment": "Claws and Teeth (A4)",
+        "specialRules": "Undead",
+        "cost": 35,
+        "quality": "5+",
+        "attack": 2,
+        "armor": 4,
+        "toughness": 3,
+        "type": "unit"
+      },
+      {
+        "name": "Corpse Carts",
+        "size": 1,
+        "equipment": "Crew Attacks (A5)",
+        "specialRules": "Corpse Pile, Fear, Undead",
+        "cost": 40,
+        "quality": "5+",
+        "attack": 4,
+        "armor": 5,
+        "toughness": 4,
+        "type": "unit"
+      },
+      {
+        "name": "Black Coaches",
+        "size": 1,
+        "equipment": "Spectral Crew Attacks (A5, AP(2))",
+        "specialRules": "Ethereal, Fast, Fear, Impact(3), Undead",
+        "cost": 150,
+        "quality": "5+",
+        "attack": 4,
+        "armor": 6,
+        "toughness": 5,
+        "type": "unit"
+      },
+      {
+        "name": "Zombie Dragon",
+        "size": 1,
+        "equipment": "Massive Claws and Teeth (A6, AP(2), Deadly(2)), Breath Attack (8\", A3, AP(1))",
+        "specialRules": "Fear, Flying, Terrifying, Undead",
+        "cost": 300,
+        "quality": "3+",
+        "attack": "5/3",
+        "armor": 6,
+        "toughness": 5,
+        "type": "unit"
+      },
+      {
+        "name": "Fell Bats",
+        "size": 3,
+        "equipment": "Claws and Teeth (A2)",
+        "specialRules": "Fast, Flying, Horde, Independent, Undead",
+        "cost": 20,
+        "quality": "6+",
+        "attack": 2,
+        "armor": 2,
+        "toughness": 2,
+        "type": "unit"
+      },
+      {
+        "name": "Dire Wolves",
+        "size": 3,
+        "equipment": "Claws and Teeth (A3)",
+        "specialRules": "Fast, Horde, Independent, Undead",
+        "cost": 25,
+        "quality": "6+",
+        "attack": 2,
+        "armor": 3,
+        "toughness": 2,
+        "type": "unit"
+      },
+      {
+        "name": "Crypt Horrors",
+        "size": 3,
+        "equipment": "Massive Claws and Teeth (A3, AP(1))",
+        "specialRules": "Fear, Flying, Undead",
+        "cost": 160,
+        "quality": "6+",
+        "attack": 3,
+        "armor": 6,
+        "toughness": 4,
+        "type": "unit"
+      },
+      {
+        "name": "Carin Wraiths",
+        "size": 3,
+        "equipment": "Scythes (A3)",
+        "specialRules": "Ethereal, Fast, Flying, Impact(1), Undead",
+        "cost": 65,
+        "quality": "5+",
+        "attack": 2,
+        "armor": 3,
+        "toughness": 3,
+        "type": "unit"
+      },
+      {
+        "name": "Banshees",
+        "size": 3,
+        "equipment": "Spectral Claws (A3)",
+        "specialRules": "Ambush, Terrifying, Ethereal, Undead",
+        "cost": 100,
+        "quality": "5+",
+        "attack": 3,
+        "armor": 3,
+        "toughness": 4,
+        "type": "unit"
+      },
+      {
+        "name": "Blood Knights",
+        "size": 3,
+        "equipment": "Lances (A3)",
+        "specialRules": "Fast, Fear, Furious, Impact(1), Undead",
+        "cost": 145,
+        "quality": "3+",
+        "attack": 5,
+        "armor": 4,
+        "toughness": 3,
+        "type": "unit"
+      }
+    ],
+    "spells": [
+      {
+        "name": "Dance of the Dead",
+        "difficulty": "3+",
+        "effect": "Target Undead unit gains Furious this turn."
+      },
+      {
+        "name": "Death Bolt",
+        "difficulty": "3+",
+        "effect": "Caster gains Death Bolt (8\", A2, AP(1)) until the end of the turn."
+      },
+      {
+        "name": "Deathly Wind",
+        "difficulty": "4+",
+        "effect": "Target Undead unit in line of sight gains +1 attack until the end of the turn."
+      },
+      {
+        "name": "Raise Dead",
+        "difficulty": "4+",
+        "effect": "Place a unit of 3 Zombies within 4\" of the caster. This unit maybe placed in combat as if it charged."
+      },
+      {
+        "name": "Invocation",
+        "difficulty": "5+",
+        "effect": "Target Undead unit gains regeneration until the tend of the turn."
+      },
+      {
+        "name": "Turn to Dust",
+        "difficulty": "5+",
+        "effect": "Target unit within 8\" suffers 3 hits."
+      }
+    ]
+  },
+  "Lizardmen": {
+    "units": [
+      {
+        "name": "Sauraus Veteran",
+        "specialRules": "Hero",
+        "cost": 75,
+        "quality": "3+",
+        "attack": 3,
+        "leadership": 1,
+        "type": "hero"
+      },
+      {
+        "name": "Skink Prest",
+        "specialRules": "Hero, Wizard(1)",
+        "cost": 75,
+        "quality": "4+",
+        "attack": 0,
+        "leadership": 1,
+        "type": "hero"
+      },
+      {
+        "name": "Skink Chief",
+        "specialRules": "Hero",
+        "cost": 50,
+        "quality": "4+",
+        "attack": 1,
+        "leadership": 1,
+        "type": "hero"
+      },
+      {
+        "name": "Sauraus Old-Blood",
+        "specialRules": "Hero, Cold One Mount",
+        "cost": 100,
+        "quality": "3+",
+        "attack": 4,
+        "leadership": 2,
+        "type": "hero"
+      },
+      {
+        "name": "Slann Mage-Priest",
+        "specialRules": "Hero, Wizard(2)",
+        "cost": 200,
+        "quality": "2+",
+        "attack": 2,
+        "leadership": 3,
+        "type": "hero"
+      },
+      {
+        "name": "Skink Cohort",
+        "size": 3,
+        "equipment": "Clubs and Shields (A2)",
+        "specialRules": "Strider, Poison",
+        "cost": 20,
+        "quality": "5+",
+        "attack": 2,
+        "armor": 2,
+        "toughness": 2,
+        "type": "unit"
+      },
+      {
+        "name": "Saurus Warriors",
+        "size": 3,
+        "equipment": "Clubs and Teeth (A4)",
+        "specialRules": "Predators",
+        "cost": 70,
+        "quality": "4+",
+        "attack": 4,
+        "armor": 4,
+        "toughness": 3,
+        "type": "unit"
+      },
+      {
+        "name": "Temple Guard",
+        "size": 3,
+        "equipment": "Halberds (A4, AP(1))",
+        "specialRules": "Predators",
+        "cost": 100,
+        "quality": "4+",
+        "attack": 4,
+        "armor": 4,
+        "toughness": 3,
+        "type": "unit"
+      },
+      {
+        "name": "Saurus Spear Warriors",
+        "size": 3,
+        "equipment": "Spears and Teeth (A4)",
+        "specialRules": "Predators, Spear Wall",
+        "cost": 85,
+        "quality": "4+",
+        "attack": 4,
+        "armor": 4,
+        "toughness": 3,
+        "type": "unit"
+      },
+      {
+        "name": "Carnoasurs",
+        "size": 1,
+        "equipment": "Massive Jaws (A5, AP(2), Deadly(2))",
+        "specialRules": "Fear, Furious, Impact(1), Predators",
+        "cost": 210,
+        "quality": "4+",
+        "attack": 5,
+        "armor": 5,
+        "toughness": 5,
+        "type": "unit"
+      },
+      {
+        "name": "Bastiladon Solar Engine",
+        "size": 1,
+        "equipment": "Massive Feet and Tail (A4, AP(1)), Solar Beam (12\", A2, AP(2), Blast(3))",
+        "specialRules": "Fear, Fearless, Impact(1)",
+        "cost": 225,
+        "quality": "4+",
+        "attack": "5/2",
+        "armor": 4,
+        "toughness": 5,
+        "type": "unit"
+      },
+      {
+        "name": "Skink Skirmishers",
+        "size": 3,
+        "equipment": "Clubs and Teeth (A2), Javelins (8\", A2)",
+        "specialRules": "Poison, Strider",
+        "cost": 30,
+        "quality": "5+",
+        "attack": "2/2",
+        "armor": 2,
+        "toughness": 2,
+        "type": "unit"
+      },
+      {
+        "name": "Chameleon Skinks",
+        "size": 3,
+        "equipment": "Clubs and Teeth (A2), Blowpipes (8\", A2)",
+        "specialRules": "Ambush, Scout, Stealth, Strider, Poison",
+        "cost": 70,
+        "quality": "5+",
+        "attack": "2/2",
+        "armor": 2,
+        "toughness": 2,
+        "type": "unit"
+      },
+      {
+        "name": "Salamanders",
+        "size": 2,
+        "equipment": "Clubs and Teeth (A3), Breath Attack (8\", A2, AP(1), Blast(2))",
+        "specialRules": "Predators, Strider",
+        "cost": 110,
+        "quality": "5+",
+        "attack": "3/2",
+        "armor": 3,
+        "toughness": 3,
+        "type": "unit"
+      },
+      {
+        "name": "Stegadon",
+        "size": 1,
+        "equipment": "Crew Attacks and Massive Tail (A4, Deadly(2)), Javelins (8\", A3, Poison)",
+        "specialRules": "Fear, Fearless, Impact(2)",
+        "cost": 250,
+        "quality": "4+",
+        "attack": "5/3",
+        "armor": 4,
+        "toughness": 6,
+        "type": "unit"
+      },
+      {
+        "name": "Terradons",
+        "size": 3,
+        "equipment": "Spears and Talons (A3), Javelins (8\", A1)",
+        "specialRules": "Fast, Impact(1), Flying, Scout, Poison",
+        "cost": 70,
+        "quality": "5+",
+        "attack": "2/1",
+        "armor": 3,
+        "toughness": 2,
+        "type": "unit"
+      },
+      {
+        "name": "Kroxigors",
+        "size": 3,
+        "equipment": "Great Weapons (A4, AP(2))",
+        "specialRules": "Predators",
+        "cost": 175,
+        "quality": "4+",
+        "attack": 4,
+        "armor": 4,
+        "toughness": 4,
+        "type": "unit"
+      },
+      {
+        "name": "Cold One Riders",
+        "size": 3,
+        "equipment": "Clubs and Teeth (A4)",
+        "specialRules": "Fast, Impact(1), Predator",
+        "cost": 100,
+        "quality": "4+",
+        "attack": 4,
+        "armor": 4,
+        "toughness": 3,
+        "type": "unit"
+      }
+    ],
+    "spells": [
+      {
+        "name": "Scrutiny",
+        "difficulty": "3+",
+        "effects": "Target unit suffers -1 attack this turn. This modifier doesn't stack with flanking."
+      },
+      {
+        "name": "Star Blinded",
+        "difficulty": "3+",
+        "effects": "Target enemy unit must immediately move 2\" or suffer Wavering."
+      },
+      {
+        "name": "Wings in the Jungle",
+        "difficulty": "4+",
+        "effects": "Target unit in line of sight makes an immediate Rush movement."
+      },
+      {
+        "name": "Scrutiny",
+        "difficulty": "4+",
+        "effects": "Target unit suffers -1 attack this turn."
+      },
+      {
+        "name": "Jungle Swarm",
+        "difficulty": "5+",
+        "effects": "Two enemy units within 8\" are immediately hit with A5 attacks."
+      },
+      {
+        "name": "Shield of the Old Ones",
+        "difficulty": "5+",
+        "effects": "Target unit gains +1 Armor and Regeneration this turn."
+      }
+    ]
+  },
+  "Empire": {
+    "units": [
+      {
+        "name": "Captain",
+        "specialRules": "Hero",
+        "cost": 50,
+        "quality": "4+",
+        "attack": 2,
+        "leadership": 1,
+        "type": "hero"
+      },
+      {
+        "name": "Wizard",
+        "specialRules": "Wizard(1)",
+        "cost": 50,
+        "quality": "4+",
+        "attack": 0,
+        "leadership": 0,
+        "type": "hero"
+      },
+      {
+        "name": "Priest",
+        "specialRules": "Hero, Religious Fervor",
+        "cost": 50,
+        "quality": "4+",
+        "attack": 1,
+        "leadership": 0,
+        "type": "hero"
+      },
+      {
+        "name": "General",
+        "specialRules": "Hero",
+        "cost": 75,
+        "quality": "3+",
+        "attack": 3,
+        "leadership": 2,
+        "type": "hero"
+      },
+      {
+        "name": "Lord",
+        "specialRules": "Hero",
+        "cost": 125,
+        "quality": "3+",
+        "attack": 4,
+        "leadership": 3,
+        "type": "hero"
+      },
+      {
+        "name": "Swordsmen",
+        "size": 3,
+        "equipment": "Swords and Shields (A3)",
+        "specialRules": "Battle Standard",
+        "cost": 45,
+        "quality": "5+",
+        "attack": 4,
+        "armor": 3,
+        "toughness": 3,
+        "type": "unit"
+      },
+      {
+        "name": "Halberdiers",
+        "size": 3,
+        "equipment": "Halberds (A3, AP(1))",
+        "specialRules": "Battle Standard",
+        "cost": 60,
+        "quality": "5+",
+        "attack": 3,
+        "armor": 3,
+        "toughness": 3,
+        "type": "unit"
+      },
+      {
+        "name": "Greatswords",
+        "size": 3,
+        "equipment": "Great Weapons (A3, AP(2))",
+        "specialRules": "Battle Standard, Fearless",
+        "cost": 75,
+        "quality": "4+",
+        "attack": 4,
+        "armor": 3,
+        "toughness": 3,
+        "type": "unit"
+      },
+      {
+        "name": "Militia",
+        "size": 3,
+        "equipment": "Hand Weapons (A3), Pistols (4\", A1, AP(1))",
+        "specialRules": "Scout",
+        "cost": 45,
+        "quality": "5+",
+        "attack": "2/1",
+        "armor": 3,
+        "toughness": 2,
+        "type": "unit"
+      },
+      {
+        "name": "Handgunners",
+        "size": 3,
+        "equipment": "Hand Weapons (A2), Rifles (8\", A1, AP(1), Piercing)",
+        "specialRules": "",
+        "cost": 60,
+        "quality": "5+",
+        "attack": "3/1",
+        "armor": 2,
+        "toughness": 3,
+        "type": "unit"
+      },
+      {
+        "name": "Great Cannons",
+        "size": 2,
+        "equipment": "Hand Weapons (A2), Cannons (12\", A2, AP(2), Deadly(3))",
+        "specialRules": "Artillery, Slow",
+        "cost": 135,
+        "quality": "5+",
+        "attack": "2/2",
+        "armor": 2,
+        "toughness": 2,
+        "type": "unit"
+      },
+      {
+        "name": "Mortars",
+        "size": 2,
+        "equipment": "Crew Attacks (A2), Mortars (16\", A2, Blast(2), Indirect)",
+        "specialRules": "Artillery, Slow",
+        "cost": 75,
+        "quality": "5+",
+        "attack": "2/2",
+        "armor": 2,
+        "toughness": 2,
+        "type": "unit"
+      },
+      {
+        "name": "Volley Guns",
+        "size": 2,
+        "equipment": "Crew Attacks (A2), Volley Guns (8\", A5, AP(1), Onslaught(6+), Piercing)",
+        "specialRules": "Artillery, Slow",
+        "cost": 175,
+        "quality": "5+",
+        "attack": "2/5",
+        "armor": 2,
+        "toughness": 2,
+        "type": "unit"
+      },
+      {
+        "name": "Steam Tanks",
+        "size": 1,
+        "equipment": "Crew Attacks (A4v, AP(2)), Tank Cannons (8\", A2, AP(2), Deadly(3))",
+        "specialRules": "",
+        "cost": 300,
+        "quality": "3+",
+        "attack": "4/2",
+        "armor": 6,
+        "toughness": 5,
+        "type": "unit"
+      },
+      {
+        "name": "Imperial Griffons",
+        "size": 1,
+        "equipment": "Large Claws and Talons (A4, AP(1))",
+        "specialRules": "Fast, Fearless, Flying, Impact(2)",
+        "cost": 100,
+        "quality": "4+",
+        "attack": 4,
+        "armor": 5,
+        "toughness": 4,
+        "type": "unit"
+      },
+      {
+        "name": "Rocket Battery",
+        "size": 2,
+        "equipment": "Crew Attacks (A2), Rockets (12\", A2, Blast(2), Indirect, Onslaught(6+))",
+        "specialRules": "Artillery, Slow",
+        "cost": 70,
+        "quality": "5+",
+        "attack": "2/3",
+        "armor": 2,
+        "toughness": 2,
+        "type": "unit"
+      },
+      {
+        "name": "War Wagons",
+        "size": 1,
+        "equipment": "Crew Attacks (A4, AP(2)), Rifles (8\", A4, AP(1), Piercing)",
+        "specialRules": "",
+        "cost": 100,
+        "quality": "4+",
+        "attack": "4/4",
+        "armor": 4,
+        "toughness": 4,
+        "type": "unit"
+      },
+      {
+        "name": "Crossbowmen",
+        "size": 3,
+        "equipment": "Hand Weapons (A2), Crossbows (12\", A1, AP(1))",
+        "specialRules": "",
+        "cost": 70,
+        "quality": "5+",
+        "attack": "3/1",
+        "armor": 2,
+        "toughness": 3,
+        "type": "unit"
+      },
+      {
+        "name": "Outriders",
+        "size": 3,
+        "equipment": "Hand Weapons (A1), Duel Pistols (4\", A2, AP(1))",
+        "specialRules": "Fast",
+        "cost": 110,
+        "quality": "5+",
+        "attack": "3/2",
+        "armor": 2,
+        "toughness": 3,
+        "type": "unit"
+      },
+      {
+        "name": "Spearmen",
+        "size": 3,
+        "equipment": "Spears (A3)",
+        "specialRules": "Battle Standard, Spear Wall",
+        "cost": 50,
+        "quality": "5+",
+        "attack": 3,
+        "armor": 3,
+        "toughness": 3,
+        "type": "unit"
+      },
+      {
+        "name": "Knights",
+        "size": 3,
+        "equipment": "Lances (A3)",
+        "specialRules": "Battle Standard, Fast, Impact(1)",
+        "cost": 80,
+        "quality": "4+",
+        "attack": 4,
+        "armor": 3,
+        "toughness": 3,
+        "type": "unit"
+      },
+      {
+        "name": "Demigryph Knights",
+        "size": 3,
+        "equipment": "Claws and Halberds (A3, AP(1))",
+        "specialRules": "Fast, Fearless, Impact(2)",
+        "cost": 180,
+        "quality": "3+",
+        "attack": 5,
+        "armor": 3,
+        "toughness": 4,
+        "type": "unit"
+      }
+    ],
+    "spells": [
+      {
+        "name": "Teleport",
+        "difficulty": "3+",
+        "effects": "Caster can move anywhere on the game board, remaining outside of 1\" of any enemy unit."
+      },
+      {
+        "name": "Voice of Command",
+        "difficulty": "3+",
+        "effects": "Caster doesn't suffer the distance penalty for ordering units outside of 8\" until the end of the turn."
+      },
+      {
+        "name": "Fireball",
+        "difficulty": "4+",
+        "effects": "Caster gains Fireball (8\", A3, Blast(2)) until the end of the turn."
+      },
+      {
+        "name": "Magic Wind",
+        "difficulty": "4+",
+        "effects": "Target friendly unit gains Fast until the end of turn. Fast units gain the benefit twice."
+      },
+      {
+        "name": "Enchant Foes",
+        "difficulty": "5+",
+        "effects": "Target enemy unit suffers -1 attack per base for all attack rolls until the end of the turn."
+      },
+      {
+        "name": "Protective Shield",
+        "difficulty": "5+",
+        "effects": "Target friendly unit cannot be targeted by shooting attacks until the end of the turn."
+      }
     ]
   }
 }
