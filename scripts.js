@@ -27,8 +27,9 @@ const baseUrl = "https://jordifas.github.io/opr_bm/data/";
 
 async function loadData() {
     try {
-        const factionsResponse = await fetch("data/factions.json");
-        const rulesResponse = await fetch("data/rules.json");
+        const factionsResponse = await fetch(baseUrl + "factions.json");
+        const rulesResponse = await fetch(baseUrl + "rules.json");
+
         console.log(factionsResponse.ok);
         console.log(rulesResponse.ok);
 
@@ -42,7 +43,7 @@ async function loadData() {
         initializeApp();
     } catch (error) {
         console.error("Error loading data:", error);
-        useHardcodedData();
+        //useHardcodedData();
         initializeApp();
     }
 }
@@ -399,18 +400,23 @@ async function loadData() {
     // Render the units list
     function renderUnitsList() {
         availableUnits.innerHTML = '';
-
+    
         const faction = factionData[currentFaction];
+        if (!faction || !faction.units) {
+            console.error(`Faction data for '${currentFaction}' not found.`);
+            return;
+        }
+    
         const template = document.getElementById('unit-card-template');
-
+    
         faction.units.forEach(unit => {
             const unitCard = document.importNode(template.content, true);
             const unitElement = unitCard.querySelector('.unit-card');
-
+    
             unitElement.dataset.type = unit.type;
             unitElement.dataset.name = unit.name;
             unitElement.dataset.cost = unit.cost;
-
+    
             unitElement.querySelector('.unit-name').textContent = unit.name;
             unitElement.querySelector('.unit-cost').textContent = `${unit.cost} pts`;
             unitElement.querySelector('.unit-size').textContent = unit.size;
@@ -419,32 +425,14 @@ async function loadData() {
             unitElement.querySelector('.unit-armor').textContent = unit.armor;
             unitElement.querySelector('.unit-tough').textContent = unit.tough;
             unitElement.querySelector('.unit-equipment').textContent = unit.equipment;
-            unitElement.querySelector('.unit-rules').textContent = unit.special.join(', ');
-
-            // Add event listeners
-            const addBtn = unitElement.querySelector('.add-unit-btn');
-            const removeBtn = unitElement.querySelector('.remove-unit-btn');
-            const increaseBtn = unitElement.querySelector('.increase-btn');
-            const decreaseBtn = unitElement.querySelector('.decrease-btn');
-
-            addBtn.addEventListener('click', () => addUnit(unit));
-            removeBtn.style.display = 'none'; // Hide remove button in available units
-
-            increaseBtn.addEventListener('click', () => {
-                const quantityElement = unitElement.querySelector('.quantity');
-                const quantity = parseInt(quantityElement.textContent) + 1;
-                quantityElement.textContent = quantity;
-            });
-
-            decreaseBtn.addEventListener('click', () => {
-                const quantityElement = unitElement.querySelector('.quantity');
-                const quantity = Math.max(0, parseInt(quantityElement.textContent) - 1);
-                quantityElement.textContent = quantity;
-            });
-
+    
+            // ✅ Fix: Ensure 'special' exists before calling 'join'
+            unitElement.querySelector('.unit-rules').textContent = Array.isArray(unit.special) ? unit.special.join(', ') : "None";
+    
             availableUnits.appendChild(unitElement);
         });
     }
+
 
     // Add a unit to the selected units
     function addUnit(unit) {
