@@ -91,7 +91,8 @@
         "tough": "3",
         "equipment": "Warpfire Throwers (A5, AP(2))",
         "special": [
-          "Fear"
+          "Fear",
+          "AP(2)"
         ],
         "type": "unit"
       },
@@ -118,7 +119,7 @@
         "armor": "3",
         "tough": "3",
         "equipment": "Hand Weapons (A3), Poison Globes (4\", A2, AP(1), Deadly(2))",
-        "special": [],
+        "special": ["AP(1)", "Deadly(2)"],
         "type": "unit"
       },
       {
@@ -132,7 +133,8 @@
         "equipment": "Hand Weapons (A2), Warplock Rifles (12\", A1, AP(2))",
         "special": [
           "Slow",
-          "Stealth"
+          "Stealth",
+          "AP(2)"
         ],
         "type": "unit"
       },
@@ -148,7 +150,7 @@
         "special": [
           "Artillery",
           "Slow",
-          "Unpredictable"
+          "Unpredictable","AP(2)", "Deadly(2)"
         ],
         "type": "unit"
       },
@@ -166,7 +168,8 @@
           "Fear",
           "Impact(3)",
           "Spear Wall",
-          "Unpredictable"
+          "Unpredictable",
+          "AP(2)", "Deadly(2)"
         ],
         "type": "unit"
       },
@@ -181,7 +184,8 @@
         "equipment": "Crew Attacks (A2), Plagueclaw Catapult (12\", A3, Blast(2), Indirect)",
         "special": [
           "Artillery",
-          "Slow"
+          "Slow", "Blast(2)",
+          "Indirect"
         ],
         "type": "unit"
       },
@@ -198,7 +202,8 @@
           "Fear",
           "Fearless",
           "Furious",
-          "Regeneration"
+          "Regeneration",
+          "AP(2)", "Deadly(2)"
         ],
         "type": "unit"
       },
@@ -228,7 +233,7 @@
         "armor": "3",
         "tough": "3",
         "equipment": "Hand Weapons (A2), Ratling Guns (8\", A3, AP(1), Onslaught(6+))",
-        "special": [],
+        "special": ["AP(1)", "Onslaught(6+)"],
         "type": "unit"
       },
       {
@@ -241,7 +246,8 @@
         "tough": "3",
         "equipment": "Halberds (A3, AP(1))",
         "special": [
-          "Fearless"
+          "Fearless",
+          "AP(1)"
         ],
         "type": "unit"
       },
@@ -257,7 +263,8 @@
         "special": [
           "Fear",
           "Fearless",
-          "Furious"
+          "Furious",
+          "AP(1)"
         ],
         "type": "unit"
       }
