@@ -27,8 +27,8 @@ const baseUrl = "https://jordifas.github.io/opr_bm/data/";
 
 async function loadData() {
     try {
-        const factionsResponse = await fetch(baseUrl + "factions.json");
-        const rulesResponse = await fetch(baseUrl + "rules.json");
+        const factionsResponse = await fetch("data/factions.json");
+        const rulesResponse = await fetch("data/rules.json");
         console.log(factionsResponse.ok);
         console.log(rulesResponse.ok);
 
