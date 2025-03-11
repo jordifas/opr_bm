@@ -29,6 +29,8 @@ async function loadData() {
     try {
         const factionsResponse = await fetch(baseUrl + "factions.json");
         const rulesResponse = await fetch(baseUrl + "rules.json");
+        console.log(factionsResponse.ok);
+        console.log(rulesResponse.ok);
 
         if (!factionsResponse.ok || !rulesResponse.ok) {
             throw new Error("Failed to fetch JSON files.");
