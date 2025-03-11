@@ -63,6 +63,7 @@ button {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-bottom: 5px;
 }
 
 button:hover {
@@ -75,12 +76,24 @@ button:hover {
 
 .points-summary {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     margin-top: 20px;
     background-color: #f9f9f9;
     padding: 10px;
     border-radius: 4px;
     font-weight: bold;
+}
+
+.points-summary div {
+    margin: 5px 10px 5px 0;
+}
+
+.army-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
 }
 
 .army-builder {
@@ -90,11 +103,12 @@ button:hover {
     margin-bottom: 30px;
 }
 
-.units-container, .selected-container {
+.units-container, .selected-container, .rules-reference, .spells-reference {
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
 .filter-options {
@@ -105,6 +119,7 @@ button:hover {
     background-color: #e0e0e0;
     color: #333;
     margin-right: 5px;
+    margin-bottom: 5px;
 }
 
 .filter-btn.active {
@@ -123,6 +138,11 @@ button:hover {
     padding: 15px;
     margin-bottom: 10px;
     background-color: #f9f9f9;
+}
+
+.hero-card {
+    border-color: #c9a227;
+    background-color: #fffbeb;
 }
 
 .unit-header {
@@ -146,14 +166,37 @@ button:hover {
     margin-bottom: 15px;
 }
 
-.stat {
+.stats-row {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
     margin-bottom: 5px;
 }
 
-.stat-label {
+.labels-row {
     font-weight: bold;
-    display: inline-block;
-    width: 100px;
+    color: #4a6da7;
+}
+
+.stat-label, .stat-value {
+    flex: 1;
+    padding: 0 5px;
+    text-align: center;
+}
+
+.equipment-row, .rules-row {
+    display: flex;
+    margin-top: 10px;
+}
+
+.equip-label, .rules-label {
+    font-weight: bold;
+    margin-right: 8px;
+    min-width: 90px;
+}
+
+.equip-value, .rules-value {
+    flex: 1;
 }
 
 .unit-actions {
@@ -185,11 +228,8 @@ button:hover {
     width: 80px;
 }
 
-.rules-reference {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.rules-reference, .spells-reference {
+    margin-bottom: 30px;
 }
 
 #rules-list {
@@ -211,33 +251,140 @@ button:hover {
     color: #4a6da7;
 }
 
-.unit-stats {
-    margin: 15px 0;
-  }
-  
-  .stats-row {
-    display: flex;
-    justify-content: space-between;
-    text-align: center;
-    margin-bottom: 5px;
-  }
-  
-  .stat-label, .stat-value {
-    flex: 1;
-    padding: 0 5px;
-  }
-  
-  .equipment-row, .rules-row {
-    display: flex;
-    margin-top: 10px;
-  }
-  
-  .equip-label, .rules-label {
+#spells-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+}
+
+.spell-item {
+    border: 1px solid #9c8ec1;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: #f5f0ff;
+}
+
+.spell-name {
     font-weight: bold;
-    margin-right: 8px;
-    min-width: 90px;
-  }
-  
-  .equip-value, .rules-value {
-    flex: 1;
-  }
+    margin-bottom: 5px;
+    color: #6f42c1;
+}
+
+.spell-difficulty {
+    color: #6c757d;
+    font-style: italic;
+    margin-bottom: 8px;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 600px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #333;
+}
+
+textarea {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    margin: 15px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: none;
+}
+
+.error {
+    color: #e63946;
+    font-weight: bold;
+}
+
+/* Mobile responsive styles */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .form-group label {
+        margin-bottom: 5px;
+        width: 100%;
+    }
+    
+    select, input[type="number"] {
+        width: 100%;
+    }
+    
+    #set-points-btn {
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100%;
+    }
+    
+    .points-summary {
+        flex-direction: column;
+    }
+    
+    .points-summary div {
+        margin-bottom: 10px;
+    }
+    
+    .army-builder {
+        grid-template-columns: 1fr;
+    }
+    
+    .army-actions {
+        flex-direction: column;
+    }
+    
+    .army-actions button {
+        width: 100%;
+    }
+    
+    #rules-list, #spells-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .unit-actions {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+    
+    .quantity-controls {
+        justify-content: center;
+    }
+    
+    .add-unit-btn, .remove-unit-btn {
+        width: 100%;
+    }
+}

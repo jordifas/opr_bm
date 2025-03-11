@@ -21,33 +21,35 @@ document.addEventListener('DOMContentLoaded', function () {
     let factionData = {};
     let rulesData = {};
     let selectedUnitsList = [];
+    let wizardSelected = false;
 
     // Load data
-const baseUrl = "https://jordifas.github.io/opr_bm/data/";
+    const baseUrl = "https://jordifas.github.io/opr_bm/data/";
 
-async function loadData() {
-    try {
-        const factionsResponse = await fetch(baseUrl + "factions.json");
-        const rulesResponse = await fetch(baseUrl + "rules.json");
+    async function loadData() {
+        try {
+            //const factionsResponse = await fetch(baseUrl + "factions.json");
+            //const rulesResponse = await fetch(baseUrl + "rules.json");
+            const factionsResponse = await fetch("data/factions.json");
+            const rulesResponse = await fetch("data/rules.json");
 
-        console.log(factionsResponse.ok);
-        console.log(rulesResponse.ok);
+            console.log(factionsResponse.ok);
+            console.log(rulesResponse.ok);
 
-        if (!factionsResponse.ok || !rulesResponse.ok) {
-            throw new Error("Failed to fetch JSON files.");
+            if (!factionsResponse.ok || !rulesResponse.ok) {
+                throw new Error("Failed to fetch JSON files.");
+            }
+
+            factionData = await factionsResponse.json();
+            rulesData = await rulesResponse.json();
+
+            initializeApp();
+        } catch (error) {
+            console.error("Error loading data:", error);
+
+            initializeApp();
         }
-
-        factionData = await factionsResponse.json();
-        rulesData = await rulesResponse.json();
-
-        initializeApp();
-    } catch (error) {
-        console.error("Error loading data:", error);
-        
-        initializeApp();
     }
-}
-
 
     // Initialize the application
     function initializeApp() {
@@ -91,6 +93,7 @@ async function loadData() {
     function changeFaction() {
         currentFaction = factionSelect.value;
         renderUnitsList();
+        renderUsedRulesList();
         console.log(currentFaction);
 
         // Reset selected units when changing faction
@@ -98,6 +101,7 @@ async function loadData() {
         selectedUnits.innerHTML = '';
         usedPoints = 0;
         selectedHeroes = 0;
+        wizardSelected = false;
         updateSummary();
     }
 
@@ -138,46 +142,156 @@ async function loadData() {
         }
     }
 
+    // Render only the rules used in selected units
+    function renderUsedRulesList() {
+        rulesList.innerHTML = '';
+
+        // Get all unique special rules used by selected units
+        const usedRules = new Set();
+        selectedUnitsList.forEach(unit => {
+            if (Array.isArray(unit.special)) {
+                unit.special.forEach(rule => {
+                    // Extract base rule name without parameters
+                    if (rule.includes('(')) {
+                        const baseName = rule.substring(0, rule.indexOf('(')).trim();
+                        usedRules.add(baseName);
+                    } else {
+                        usedRules.add(rule);
+                    }
+                });
+            }
+        });
+
+        // Create elements for each used rule
+        usedRules.forEach(ruleName => {
+            if (rulesData[ruleName]) {
+                const ruleElement = document.createElement('div');
+                ruleElement.className = 'rule-item';
+
+                ruleElement.innerHTML = `
+                    <div class="rule-name">${ruleName}</div>
+                    <div class="rule-description">${rulesData[ruleName]}</div>
+                `;
+
+                rulesList.appendChild(ruleElement);
+            }
+        });
+
+        // Add spells section if wizard is selected
+        if (wizardSelected && factionData[currentFaction].spells) {
+            const spellsTitle = document.createElement('h3');
+            spellsTitle.textContent = 'Spells';
+            spellsTitle.className = 'spells-title';
+            rulesList.appendChild(spellsTitle);
+
+            factionData[currentFaction].spells.forEach(spell => {
+                const spellElement = document.createElement('div');
+                spellElement.className = 'rule-item spell-item';
+
+                spellElement.innerHTML = `
+                    <div class="rule-name">${spell.name} (${spell.difficulty})</div>
+                    <div class="rule-description">${spell.effect}</div>
+                `;
+
+                rulesList.appendChild(spellElement);
+            });
+        }
+    }
+
     // Render the units list
     function renderUnitsList() {
         availableUnits.innerHTML = '';
-    
+
         const faction = factionData[currentFaction];
         if (!faction || !faction.units) {
             console.error(`Faction data for '${currentFaction}' not found.`);
             return;
         }
-    
+
         const template = document.getElementById('unit-card-template');
-    
+
         faction.units.forEach(unit => {
             const unitCard = document.importNode(template.content, true);
             const unitElement = unitCard.querySelector('.unit-card');
-    
+
             unitElement.dataset.type = unit.type;
             unitElement.dataset.name = unit.name;
             unitElement.dataset.cost = unit.cost;
-    
+
+            // Store if the unit is a wizard
+            if (unit.special && Array.isArray(unit.special) &&
+                unit.special.some(rule => rule.includes('Wizard'))) {
+                unitElement.dataset.wizard = 'true';
+            }
+
             unitElement.querySelector('.unit-name').textContent = unit.name;
             unitElement.querySelector('.unit-cost').textContent = `${unit.cost} pts`;
             unitElement.querySelector('.unit-size').textContent = unit.size;
             unitElement.querySelector('.unit-quality').textContent = unit.quality;
             unitElement.querySelector('.unit-attack').textContent = unit.attack;
-            unitElement.querySelector('.unit-armor').textContent = unit.armor;
-            unitElement.querySelector('.unit-tough').textContent = unit.tough;
-            unitElement.querySelector('.unit-equipment').textContent = unit.equipment;
-    
-            // ✅ Fix: Ensure 'special' exists before calling 'join'
-            unitElement.querySelector('.unit-rules').textContent = Array.isArray(unit.special) ? unit.special.join(', ') : "None";
-    
+
+            const statsRow = unitElement.querySelector('.stats-row.labels-row');
+            const valuesRow = unitElement.querySelector('.stats-row.values-row');
+
+            // Modify hero card to show Leadership instead of armor, tough, equipment
+            if (unit.type === 'hero') {
+                // Replace armor and tough stats with leadership
+                const armorLabel = statsRow.querySelector('.stat-label:nth-child(4)');
+                const toughLabel = statsRow.querySelector('.stat-label:nth-child(5)');
+
+                armorLabel.textContent = 'Leadership';
+                toughLabel.remove();
+
+                const armorValue = valuesRow.querySelector('.stat-value:nth-child(4)');
+                const toughValue = valuesRow.querySelector('.stat-value:nth-child(5)');
+
+                armorValue.textContent = unit.leadership || '0';
+                toughValue.remove();
+
+                // Remove equipment row for heroes
+                unitElement.querySelector('.equipment-row').style.display = 'none';
+            } else {
+                // Regular unit stats
+                unitElement.querySelector('.unit-armor').textContent = unit.armor;
+                unitElement.querySelector('.unit-tough').textContent = unit.tough;
+                unitElement.querySelector('.unit-equipment').textContent = unit.equipment || "None";
+            }
+
+            // Special rules for all unit types
+            unitElement.querySelector('.unit-rules').textContent =
+                Array.isArray(unit.special) ? unit.special.join(', ') : "None";
+
+            // Add event listeners for unit selection
+            const addButton = unitElement.querySelector('.add-unit-btn');
+            const increaseBtn = unitElement.querySelector('.increase-btn');
+            const decreaseBtn = unitElement.querySelector('.decrease-btn');
+            const quantityElement = unitElement.querySelector('.quantity');
+
+            addButton.addEventListener('click', () => {
+                addUnit(unit);
+            });
+
+            increaseBtn.addEventListener('click', () => {
+                let quantity = parseInt(quantityElement.textContent);
+                quantityElement.textContent = quantity + 1;
+            });
+
+            decreaseBtn.addEventListener('click', () => {
+                let quantity = parseInt(quantityElement.textContent);
+                if (quantity > 0) {
+                    quantityElement.textContent = quantity - 1;
+                }
+            });
+
             availableUnits.appendChild(unitElement);
         });
     }
 
-
     // Add a unit to the selected units
     function addUnit(unit) {
-        const quantity = parseInt(document.querySelector(`[data-name="${unit.name}"] .quantity`).textContent);
+        const unitElement = document.querySelector(`[data-name="${unit.name}"]`);
+        const quantity = parseInt(unitElement.querySelector('.quantity').textContent);
+
         if (quantity <= 0) {
             alert('Please select a quantity greater than 0.');
             return;
@@ -204,6 +318,11 @@ async function loadData() {
             selectedHeroes += quantity;
         }
 
+        // Check if wizard was selected
+        if (unitElement.dataset.wizard === 'true') {
+            wizardSelected = true;
+        }
+
         // Add to selected units list
         selectedUnitsList.push(unitEntry);
 
@@ -213,12 +332,12 @@ async function loadData() {
         // Update summary and validate army
         updateSummary();
         validateArmy();
+        renderUsedRulesList();
 
         // Reset quantity in available units
-        document.querySelector(`[data-name="${unit.name}"] .quantity`).textContent = '0';
+        unitElement.querySelector('.quantity').textContent = '0';
     }
 
-    // Remove a unit from the selected units
     // Remove a unit from the selected units
     function removeUnit(index) {
         const unit = selectedUnitsList[index];
@@ -232,10 +351,18 @@ async function loadData() {
         // Remove from list
         selectedUnitsList.splice(index, 1);
 
+        // Check if any wizards are still selected
+        wizardSelected = selectedUnitsList.some(unit =>
+            unit.special &&
+            Array.isArray(unit.special) &&
+            unit.special.some(rule => rule.includes('Wizard'))
+        );
+
         // Update UI
         renderSelectedUnits();
         updateSummary();
         validateArmy();
+        renderUsedRulesList();
     }
 
     // Render a selected unit to the list
@@ -244,24 +371,77 @@ async function loadData() {
         unitElement.className = 'unit-card';
         unitElement.dataset.type = unit.type;
 
-        unitElement.innerHTML = `
-        <div class="unit-header">
-            <h3 class="unit-name">${unit.name} x${unit.quantity}</h3>
-            <div class="unit-cost">${unit.totalCost} pts</div>
-        </div>
-        <div class="unit-stats">
-            <div class="stat"><span class="stat-label">Size:</span> <span>${unit.size}</span></div>
-            <div class="stat"><span class="stat-label">Quality:</span> <span>${unit.quality}</span></div>
-            <div class="stat"><span class="stat-label">Attack:</span> <span>${unit.attack}</span></div>
-            <div class="stat"><span class="stat-label">Armor:</span> <span>${unit.armor}</span></div>
-            <div class="stat"><span class="stat-label">Tough:</span> <span>${unit.tough}</span></div>
-            <div class="stat"><span class="stat-label">Equipment:</span> <span>${unit.equipment}</span></div>
-            <div class="stat"><span class="stat-label">Special Rules:</span> <span>${unit.special.join(', ')}</span></div>
-        </div>
-        <div class="unit-actions">
-            <button class="remove-unit-btn">Remove</button>
-        </div>
-    `;
+        // Create HTML structure similar to the available units
+        if (unit.type === 'hero') {
+            unitElement.innerHTML = `
+                <div class="unit-header">
+                    <h3 class="unit-name">${unit.name} x${unit.quantity}</h3>
+                    <div class="unit-cost">${unit.totalCost} pts</div>
+                </div>
+                <div class="unit-stats">
+                    <!-- Row 1: Stat Labels -->
+                    <div class="stats-row labels-row">
+                        <div class="stat-label">Size</div>
+                        <div class="stat-label">Quality</div>
+                        <div class="stat-label">Attack</div>
+                        <div class="stat-label">Leadership</div>
+                    </div>
+                    <!-- Row 2: Stat Values -->
+                    <div class="stats-row values-row">
+                        <div class="stat-value">${unit.size}</div>
+                        <div class="stat-value">${unit.quality}</div>
+                        <div class="stat-value">${unit.attack}</div>
+                        <div class="stat-value">${unit.leadership || 'N/A'}</div>
+                    </div>
+                    <!-- Row 4: Special Rules -->
+                    <div class="rules-row">
+                        <div class="rules-label">Special Rules:</div>
+                        <div class="rules-value">${Array.isArray(unit.special) ? unit.special.join(', ') : 'None'}</div>
+                    </div>
+                </div>
+                <div class="unit-actions">
+                    <button class="remove-unit-btn">Remove</button>
+                </div>
+            `;
+        } else {
+            unitElement.innerHTML = `
+                <div class="unit-header">
+                    <h3 class="unit-name">${unit.name} x${unit.quantity}</h3>
+                    <div class="unit-cost">${unit.totalCost} pts</div>
+                </div>
+                <div class="unit-stats">
+                    <!-- Row 1: Stat Labels -->
+                    <div class="stats-row labels-row">
+                        <div class="stat-label">Size</div>
+                        <div class="stat-label">Quality</div>
+                        <div class="stat-label">Attack</div>
+                        <div class="stat-label">Armor</div>
+                        <div class="stat-label">Tough</div>
+                    </div>
+                    <!-- Row 2: Stat Values -->
+                    <div class="stats-row values-row">
+                        <div class="stat-value">${unit.size}</div>
+                        <div class="stat-value">${unit.quality}</div>
+                        <div class="stat-value">${unit.attack}</div>
+                        <div class="stat-value">${unit.armor}</div>
+                        <div class="stat-value">${unit.tough}</div>
+                    </div>
+                    <!-- Row 3: Equipment -->
+                    <div class="equipment-row">
+                        <div class="equip-label">Equipment:</div>
+                        <div class="equip-value">${unit.equipment || 'None'}</div>
+                    </div>
+                    <!-- Row 4: Special Rules -->
+                    <div class="rules-row">
+                        <div class="rules-label">Special Rules:</div>
+                        <div class="rules-value">${Array.isArray(unit.special) ? unit.special.join(', ') : 'None'}</div>
+                    </div>
+                </div>
+                <div class="unit-actions">
+                    <button class="remove-unit-btn">Remove</button>
+                </div>
+            `;
+        }
 
         const removeBtn = unitElement.querySelector('.remove-unit-btn');
         const index = selectedUnitsList.length - 1;
@@ -279,24 +459,77 @@ async function loadData() {
             unitElement.className = 'unit-card';
             unitElement.dataset.type = unit.type;
 
-            unitElement.innerHTML = `
-            <div class="unit-header">
-                <h3 class="unit-name">${unit.name} x${unit.quantity}</h3>
-                <div class="unit-cost">${unit.totalCost} pts</div>
-            </div>
-            <div class="unit-stats">
-                <div class="stat"><span class="stat-label">Size:</span> <span>${unit.size}</span></div>
-                <div class="stat"><span class="stat-label">Quality:</span> <span>${unit.quality}</span></div>
-                <div class="stat"><span class="stat-label">Attack:</span> <span>${unit.attack}</span></div>
-                <div class="stat"><span class="stat-label">Armor:</span> <span>${unit.armor}</span></div>
-                <div class="stat"><span class="stat-label">Tough:</span> <span>${unit.tough}</span></div>
-                <div class="stat"><span class="stat-label">Equipment:</span> <span>${unit.equipment}</span></div>
-                <div class="stat"><span class="stat-label">Special Rules:</span> <span>${unit.special.join(', ')}</span></div>
-            </div>
-            <div class="unit-actions">
-                <button class="remove-unit-btn">Remove</button>
-            </div>
-        `;
+            // Use the same format as renderSelectedUnit
+            if (unit.type === 'hero') {
+                unitElement.innerHTML = `
+                    <div class="unit-header">
+                        <h3 class="unit-name">${unit.name} x${unit.quantity}</h3>
+                        <div class="unit-cost">${unit.totalCost} pts</div>
+                    </div>
+                    <div class="unit-stats">
+                        <!-- Row 1: Stat Labels -->
+                        <div class="stats-row labels-row">
+                            <div class="stat-label">Size</div>
+                            <div class="stat-label">Quality</div>
+                            <div class="stat-label">Attack</div>
+                            <div class="stat-label">Leadership</div>
+                        </div>
+                        <!-- Row 2: Stat Values -->
+                        <div class="stats-row values-row">
+                            <div class="stat-value">${unit.size}</div>
+                            <div class="stat-value">${unit.quality}</div>
+                            <div class="stat-value">${unit.attack}</div>
+                            <div class="stat-value">${unit.leadership || 'N/A'}</div>
+                        </div>
+                        <!-- Row 4: Special Rules -->
+                        <div class="rules-row">
+                            <div class="rules-label">Special Rules:</div>
+                            <div class="rules-value">${Array.isArray(unit.special) ? unit.special.join(', ') : 'None'}</div>
+                        </div>
+                    </div>
+                    <div class="unit-actions">
+                        <button class="remove-unit-btn">Remove</button>
+                    </div>
+                `;
+            } else {
+                unitElement.innerHTML = `
+                    <div class="unit-header">
+                        <h3 class="unit-name">${unit.name} x${unit.quantity}</h3>
+                        <div class="unit-cost">${unit.totalCost} pts</div>
+                    </div>
+                    <div class="unit-stats">
+                        <!-- Row 1: Stat Labels -->
+                        <div class="stats-row labels-row">
+                            <div class="stat-label">Size</div>
+                            <div class="stat-label">Quality</div>
+                            <div class="stat-label">Attack</div>
+                            <div class="stat-label">Armor</div>
+                            <div class="stat-label">Tough</div>
+                        </div>
+                        <!-- Row 2: Stat Values -->
+                        <div class="stats-row values-row">
+                            <div class="stat-value">${unit.size}</div>
+                            <div class="stat-value">${unit.quality}</div>
+                            <div class="stat-value">${unit.attack}</div>
+                            <div class="stat-value">${unit.armor}</div>
+                            <div class="stat-value">${unit.tough}</div>
+                        </div>
+                        <!-- Row 3: Equipment -->
+                        <div class="equipment-row">
+                            <div class="equip-label">Equipment:</div>
+                            <div class="equip-value">${unit.equipment || 'None'}</div>
+                        </div>
+                        <!-- Row 4: Special Rules -->
+                        <div class="rules-row">
+                            <div class="rules-label">Special Rules:</div>
+                            <div class="rules-value">${Array.isArray(unit.special) ? unit.special.join(', ') : 'None'}</div>
+                        </div>
+                    </div>
+                    <div class="unit-actions">
+                        <button class="remove-unit-btn">Remove</button>
+                    </div>
+                `;
+            }
 
             const removeBtn = unitElement.querySelector('.remove-unit-btn');
             removeBtn.addEventListener('click', () => removeUnit(index));
@@ -325,7 +558,7 @@ async function loadData() {
         }
     }
 
-    // Export army list
+    // Export army list as JSON
     function exportArmyList() {
         const exportData = {
             faction: currentFaction,
@@ -335,7 +568,8 @@ async function loadData() {
                 name: unit.name,
                 quantity: unit.quantity,
                 cost: unit.totalCost,
-                type: unit.type
+                type: unit.type,
+                special: unit.special
             }))
         };
 
@@ -350,6 +584,113 @@ async function loadData() {
         linkElement.click();
     }
 
+    // Export army list as string for sharing
+    function exportArmyListAsString() {
+        const exportData = {
+            faction: currentFaction,
+            totalPoints: armyPoints,
+            usedPoints: usedPoints,
+            units: selectedUnitsList.map(unit => ({
+                name: unit.name,
+                quantity: unit.quantity,
+                cost: unit.cost,
+                type: unit.type
+            }))
+        };
+
+        // Convert to compact string format
+        const compactString = btoa(JSON.stringify(exportData));
+
+        // Create modal or copy to clipboard
+        const textarea = document.createElement('textarea');
+        textarea.value = compactString;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+
+        alert('Army list copied to clipboard! Share this code to let others import your army.');
+    }
+
+    // Import army list from string
+    function importArmyListFromString() {
+        const importString = prompt("Paste the army list code here:");
+        if (!importString) return;
+
+        try {
+            // Decode the string
+            const importData = JSON.parse(atob(importString));
+
+            // Set faction
+            if (importData.faction) {
+                currentFaction = importData.faction;
+                factionSelect.value = currentFaction;
+                changeFaction();
+            }
+
+            // Set points
+            if (importData.totalPoints) {
+                armyPoints = importData.totalPoints;
+                pointsInput.value = armyPoints;
+                setArmyPoints();
+            }
+
+            // Import units
+            if (importData.units && Array.isArray(importData.units)) {
+                // Get faction data to match unit details
+                const faction = factionData[currentFaction];
+                if (!faction || !faction.units) {
+                    throw new Error("Faction data not found");
+                }
+
+                // Add each unit
+                importData.units.forEach(importedUnit => {
+                    // Find matching unit in faction
+                    const unitData = faction.units.find(u => u.name === importedUnit.name);
+                    if (unitData) {
+                        // Create unit entry
+                        const unitEntry = {
+                            ...unitData,
+                            quantity: importedUnit.quantity,
+                            totalCost: unitData.cost * importedUnit.quantity
+                        };
+
+                        // Update counters
+                        usedPoints += unitEntry.totalCost;
+                        if (unitEntry.type === 'hero') {
+                            selectedHeroes += unitEntry.quantity;
+                        }
+
+                        // Check if wizard
+                        if (unitEntry.special &&
+                            Array.isArray(unitEntry.special) &&
+                            unitEntry.special.some(rule => rule.includes('Wizard'))) {
+                            wizardSelected = true;
+                        }
+
+                        // Add to list
+                        selectedUnitsList.push(unitEntry);
+
+                        // Render unit
+                        renderSelectedUnit(unitEntry);
+                    }
+                });
+
+                // Update UI
+                updateSummary();
+                validateArmy();
+                renderUsedRulesList();
+            }
+
+            alert('Army list imported successfully!');
+
+        } catch (error) {
+            console.error("Import error:", error);
+            alert('Failed to import army list. The code may be invalid.');
+        }
+    }
+
+    // Export army list as PDF
     function exportArmyListAsPdf() {
         // Create a new jsPDF instance
         const { jsPDF } = window.jspdf;
@@ -361,7 +702,7 @@ async function loadData() {
         // Add title
         doc.setFontSize(20);
         doc.setFont('helvetica', 'bold');
-        const factionName = factionData[currentFaction].name;
+        const factionName = factionData[currentFaction].name || currentFaction;
         doc.text(`${factionName} Army List (${usedPoints}/${armyPoints} pts)`, 105, y, { align: 'center' });
         y += 15;
 
@@ -376,7 +717,7 @@ async function loadData() {
         const heroes = selectedUnitsList.filter(unit => unit.type === 'hero');
         const regularUnits = selectedUnitsList.filter(unit => unit.type === 'unit');
 
-        // Function to add a section of units
+        // Function to add a section of units with card design
         function addUnitsSection(title, units) {
             if (units.length === 0) return;
 
@@ -390,112 +731,206 @@ async function loadData() {
             doc.setFontSize(16);
             doc.setFont('helvetica', 'bold');
             doc.text(title, 14, y);
-            y += 8;
-
-            // Add table header
-            doc.setFontSize(10);
-            doc.setDrawColor(0);
-            doc.setFillColor(240, 240, 240);
-            doc.rect(10, y, 190, 7, 'F');
-            doc.text("Unit", 14, y + 5);
-            doc.text("Qty", 70, y + 5);
-            doc.text("Cost", 85, y + 5);
-            doc.text("Stats", 105, y + 5);
-            doc.text("Special Rules", 150, y + 5);
             y += 10;
 
-            // Add units
+            // Add each unit as a card
             units.forEach(unit => {
                 // Check if we need a new page
-                if (y > 270) {
+                if (y > 230) {
                     doc.addPage();
                     y = 20;
                 }
 
-                const unitHeight = 7;
+                // Card boundary
+                doc.setDrawColor(100, 100, 100);
+                doc.setLineWidth(0.5);
+
+                // Card height depends on unit type
+                const cardHeight = unit.type === 'hero' ? 55 : 65;
+
+                // Draw rectangle for card
+                doc.roundedRect(10, y, 190, cardHeight, 3, 3);
+
+                // Unit header
+                doc.setFillColor(240, 240, 240);
+                doc.rect(10, y, 190, 10, 'F');
+
                 doc.setFont('helvetica', 'bold');
-                doc.text(unit.name, 14, y + 5);
+                doc.setFontSize(12);
+                doc.text(`${unit.name} x${unit.quantity}`, 15, y + 7);
+
                 doc.setFont('helvetica', 'normal');
-                doc.text(unit.quantity.toString(), 70, y + 5);
-                doc.text(`${unit.totalCost} pts`, 85, y + 5);
+                doc.text(`${unit.totalCost} pts`, 180, y + 7, { align: 'right' });
 
-                // Stats
-                const stats = `Size: ${unit.size}, Qual: ${unit.quality}, Atk: ${unit.attack}, Arm: ${unit.armor}, Tough: ${unit.tough}`;
-                doc.text(stats, 105, y + 5);
+                y += 12;
 
-                // Special rules (handle longer text)
-                const specialRules = unit.special.join(', ');
-                if (specialRules.length > 40) {
-                    const firstLine = specialRules.substring(0, 40) + "...";
-                    doc.text(firstLine, 150, y + 5);
+                // Stats table - header row
+                doc.setLineWidth(0.2);
+                doc.line(15, y + 5, 185, y + 5);
+
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'bold');
+
+                if (unit.type === 'hero') {
+                    // Hero stats
+                    doc.text("Size", 30, y + 4, { align: 'center' });
+                    doc.text("Quality", 70, y + 4, { align: 'center' });
+                    doc.text("Attack", 110, y + 4, { align: 'center' });
+                    doc.text("Leadership", 150, y + 4, { align: 'center' });
+
+                    y += 7;
+
+                    // Values row
+                    doc.setFont('helvetica', 'normal');
+                    doc.text(unit.size.toString(), 30, y + 4, { align: 'center' });
+                    doc.text(unit.quality.toString(), 70, y + 4, { align: 'center' });
+                    doc.text(unit.attack.toString(), 110, y + 4, { align: 'center' });
+                    doc.text(unit.leadership?.toString() || 'N/A', 150, y + 4, { align: 'center' });
                 } else {
-                    doc.text(specialRules, 150, y + 5);
-                }
+                    // Regular unit stats
+                    doc.text("Size", 30, y + 4, { align: 'center' });
+                    doc.text("Quality", 60, y + 4, { align: 'center' });
+                    doc.text("Attack", 90, y + 4, { align: 'center' });
+                    doc.text("Armor", 120, y + 4, { align: 'center' });
+                    doc.text("Tough", 150, y + 4, { align: 'center' });
 
-                // Draw lines
-                doc.setDrawColor(200, 200, 200);
-                doc.line(10, y + unitHeight, 200, y + unitHeight);
+                    y += 7;
 
-                y += unitHeight + 3;
+                    // Values row
+                    doc.setFont('helvetica', 'normal');
+                    doc.text(unit.size.toString(), 30, y + 4, { align: 'center' });
+                    doc.text(unit.quality.toString(), 60, y + 4, { align: 'center' });
+                    doc.text(unit.attack.toString(), 90, y + 4, { align: 'center' });
+                    doc.text(unit.armor.toString(), 120, y + 4, { align: 'center' });
+                    doc.text(unit.tough.toString(), 150, y + 4, { align: 'center' });
 
-                // Add equipment on next line if available
-                if (unit.equipment && unit.equipment.length > 0) {
-                    doc.text(`Equipment: ${unit.equipment}`, 20, y + 3);
                     y += 8;
-                }
-            });
 
-            y += 10; // Add some space after the section
+                    // Equipment
+                    doc.setFont('helvetica', 'bold');
+                    doc.text("Equipment:", 15, y + 4);
+                    doc.setFont('helvetica', 'normal');
+
+                    // Handle long equipment text                    
+                    const equipText = unit.equipment || 'None';
+                    const maxLineWidth = 160;
+
+                    if (doc.getStringUnitWidth(equipText) * doc.internal.getFontSize() > maxLineWidth) {
+                        const splitEquipment = doc.splitTextToSize(equipText, maxLineWidth);
+                        doc.text(splitEquipment, 70, y + 4);
+                        y += (splitEquipment.length - 1) * 5;
+                    } else {
+                        doc.text(equipText, 70, y + 4);
+                    }
+                }
+
+                y += 8;
+
+                // Special rules
+                doc.setFont('helvetica', 'bold');
+                doc.text("Special Rules:", 15, y + 4);
+                doc.setFont('helvetica', 'normal');
+
+                const specialRules = Array.isArray(unit.special) ? unit.special.join(', ') : 'None';
+                const splitRules = doc.splitTextToSize(specialRules, 165);
+                doc.text(splitRules, 70, y + 4);
+
+                // Add height for multiline rules
+                const rulesHeight = Math.max(splitRules.length * 5, 5);
+
+                // Move to next card position
+                y += rulesHeight + 15;
+            });
         }
 
-        // Add heroes and units sections
-        addUnitsSection("HEROES", heroes);
-        addUnitsSection("UNITS", regularUnits);
+        // Add heroes section
+        addUnitsSection("Heroes", heroes);
 
-        // Add rules summary if fits
-        if (y < 240 && selectedUnitsList.length > 0) {
+        // Add units section
+        addUnitsSection("Units", regularUnits);
+
+        // Add rules section if any units are selected
+        if (selectedUnitsList.length > 0) {
+            if (y > 200) {
+                doc.addPage();
+                y = 20;
+            }
+
             // Get all unique special rules used by selected units
             const usedRules = new Set();
             selectedUnitsList.forEach(unit => {
-                unit.special.forEach(rule => {
-                    if (rule.includes('(')) {
+                if (Array.isArray(unit.special)) {
+                    unit.special.forEach(rule => {
                         // Extract base rule name without parameters
-                        const baseName = rule.substring(0, rule.indexOf('('));
-                        usedRules.add(baseName);
-                    } else {
-                        usedRules.add(rule);
-                    }
-                });
+                        if (rule.includes('(')) {
+                            const baseName = rule.substring(0, rule.indexOf('(')).trim();
+                            usedRules.add(baseName);
+                        } else {
+                            usedRules.add(rule);
+                        }
+                    });
+                }
             });
 
-            // Add rules section if there are rules to display
             if (usedRules.size > 0) {
                 doc.setFontSize(16);
                 doc.setFont('helvetica', 'bold');
-                doc.text("SPECIAL RULES REFERENCE", 14, y);
-                y += 8;
+                doc.text("Rules Reference", 14, y);
+                y += 10;
 
-                // Add each rule
-                doc.setFontSize(9);
-                usedRules.forEach(rule => {
-                    if (y > 270) {
+                usedRules.forEach(ruleName => {
+                    if (rulesData[ruleName]) {
+                        // Check if we need a new page
+                        if (y > 250) {
+                            doc.addPage();
+                            y = 20;
+                        }
+
+                        doc.setFontSize(12);
+                        doc.setFont('helvetica', 'bold');
+                        doc.text(ruleName, 15, y);
+                        y += 5;
+
+                        doc.setFontSize(10);
+                        doc.setFont('helvetica', 'normal');
+                        const splitDesc = doc.splitTextToSize(rulesData[ruleName], 180);
+                        doc.text(splitDesc, 15, y);
+
+                        y += splitDesc.length * 5 + 5;
+                    }
+                });
+            }
+
+            // Add spells section if wizard is selected
+            if (wizardSelected && factionData[currentFaction].spells) {
+                if (y > 250) {
+                    doc.addPage();
+                    y = 20;
+                }
+
+                doc.setFontSize(16);
+                doc.setFont('helvetica', 'bold');
+                doc.text("Spells", 14, y);
+                y += 10;
+
+                factionData[currentFaction].spells.forEach(spell => {
+                    // Check if we need a new page
+                    if (y > 250) {
                         doc.addPage();
                         y = 20;
                     }
 
-                    if (rulesData[rule]) {
-                        doc.setFont('helvetica', 'bold');
-                        doc.text(rule, 14, y);
-                        doc.setFont('helvetica', 'normal');
+                    doc.setFontSize(12);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`${spell.name} (${spell.difficulty})`, 15, y);
+                    y += 5;
 
-                        // Handle long rule descriptions
-                        const description = rulesData[rule];
-                        const maxWidth = 180;
-                        const lines = doc.splitTextToSize(description, maxWidth);
-                        doc.text(lines, 14, y + 4);
+                    doc.setFontSize(10);
+                    doc.setFont('helvetica', 'normal');
+                    const splitEffect = doc.splitTextToSize(spell.effect, 180);
+                    doc.text(splitEffect, 15, y);
 
-                        y += 4 + (lines.length * 4) + 2;
-                    }
+                    y += splitEffect.length * 5 + 5;
                 });
             }
         }
@@ -504,68 +939,34 @@ async function loadData() {
         doc.save(`${currentFaction}-army-list.pdf`);
     }
 
-    // Add export PDF button
-    function addExportPdfButton() {
-        const exportPdfBtn = document.createElement('button');
-        exportPdfBtn.textContent = 'Export as PDF';
-        exportPdfBtn.id = 'export-pdf-btn';
-        exportPdfBtn.addEventListener('click', exportArmyListAsPdf);
+    // Add export buttons to the UI
+    function addExportButtons() {
+        const exportContainer = document.createElement('div');
+        exportContainer.className = 'export-container';
 
-        const container = document.querySelector('.selected-container');
+        const exportButtons = `
+            <button id="export-pdf-btn" class="export-btn">Export as PDF</button>
+            <button id="export-json-btn" class="export-btn">Export as JSON</button>
+            <button id="share-btn" class="export-btn">Share Army List</button>
+            <button id="import-btn" class="export-btn">Import Army List</button>
+        `;
 
-        // Add after export JSON button
-        const exportJsonBtn = document.getElementById('export-btn');
-        if (exportJsonBtn) {
-            container.insertBefore(exportPdfBtn, exportJsonBtn.nextSibling);
-        } else {
-            container.insertBefore(exportPdfBtn, container.firstChild.nextSibling);
-        }
+        exportContainer.innerHTML = exportButtons;
+
+        // Add container after the army-builder section
+        const armyBuilder = document.querySelector('.army-builder');
+        armyBuilder.parentNode.insertBefore(exportContainer, armyBuilder.nextSibling);
+
+        // Add event listeners
+        document.getElementById('export-pdf-btn').addEventListener('click', exportArmyListAsPdf);
+        document.getElementById('export-json-btn').addEventListener('click', exportArmyList);
+        document.getElementById('share-btn').addEventListener('click', exportArmyListAsString);
+        document.getElementById('import-btn').addEventListener('click', importArmyListFromString);
     }
 
-    // Add export button
-    function addExportButton() {
-        const exportBtn = document.createElement('button');
-        exportBtn.textContent = 'Export Army List';
-        exportBtn.id = 'export-btn';
-        exportBtn.addEventListener('click', exportArmyList);
-
-        const container = document.querySelector('.selected-container');
-        container.insertBefore(exportBtn, container.firstChild.nextSibling);
-    }
-
-    // Add CSS for validation
-    function addValidationStyles() {
-        const style = document.createElement('style');
-        style.textContent = `
-        .error {
-            color: #e63946;
-            font-weight: bold;
-        }
-    `;
-        document.head.appendChild(style);
-    }
-
-    // Initialize extra features
-    function initExtraFeatures() {
-        addExportButton();
-        addExportPdfButton();
-        addValidationStyles();
-    }
-
-    // Start the application
+    // Initialize with data
     loadData();
-    initExtraFeatures();
 
-
+    // Add export buttons after DOM is loaded
+    addExportButtons();
 });
-
-// First, add the jsPDF library to your index.html
-// Add this line in the <head> section of index.html
-// <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-// Now let's modify your scripts.js file to add PDF export functionality
-// Add this function after the exportArmyList function
-
-
-
-// Modify initExtraFeatures to add PDF export button
