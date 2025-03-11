@@ -19,61 +19,52 @@
       },
       {
         "name": "Packmaster",
-        "size": 1,
         "cost": 50,
         "quality": "4+",
-        "attack": "2",
-        "armor": "0",
-        "tough": "1",
-        "equipment": "",
+        "attack": "2",        
         "special": [
           "Hero",
           "Under the Lash"
         ],
-        "type": "hero"
+        "type": "hero",
+        "leadership": 0
       },
       {
         "name": "Warlock Engineer",
         "size": 1,
         "cost": 50,
         "quality": "4+",
-        "attack": "0/1",
-        "armor": "0",
-        "tough": "1",
-        "equipment": "",
+        "attack": "0/1",        
         "special": [
           "Hero"
         ],
+        "leadership": 0,
         "type": "hero"
+        
       },
       {
-        "name": "Grey Seer",
-        "size": 1,
+        "name": "Grey Seer",        
         "cost": 150,
         "quality": "3+",
-        "attack": "1",
-        "armor": "2",
-        "tough": "1",
-        "equipment": "",
+        "attack": "1",        
         "special": [
           "Wizard(2)"
         ],
-        "type": "hero"
+        "type": "hero",
+        "leadership": 2
       },
       {
         "name": "Warlord",
         "size": 1,
         "cost": 75,
         "quality": "4+",
-        "attack": "3",
-        "armor": "1",
-        "tough": "1",
-        "equipment": "",
+        "attack": "3",        
         "special": [
           "Hero",
           "Under the Lash"
         ],
-        "type": "hero"
+        "type": "hero",
+        "leadership": 1
       },
       {
         "name": "Plague Monks",
@@ -1302,7 +1293,8 @@
         "special": [
           "Hero"
         ],
-        "type": "hero"
+        "type": "hero",
+        "leadership": 1
       },
       {
         "name": "Sorceress",
@@ -1317,7 +1309,8 @@
           "Hero",
           "Wizard(1)"
         ],
-        "type": "hero"
+        "type": "hero",
+        "leadership": 1
       },
       {
         "name": "Supreme Sorceress",
@@ -1332,7 +1325,8 @@
           "Cauldron of Blood",
           "Wizard(2)"
         ],
-        "type": "hero"
+        "type": "hero",
+        "leadership": 2
       },
       {
         "name": "Dreadlord",
@@ -1346,7 +1340,8 @@
         "special": [
           "Hero"
         ],
-        "type": "hero"
+        "type": "hero",
+        "leadership": 3
       }
     ],
     "spells": [
