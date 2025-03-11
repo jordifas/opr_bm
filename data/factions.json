@@ -1077,5 +1077,309 @@
         "effects": "Target friendly unit cannot be targeted by shooting attacks until the end of the turn."
       }
     ]
+  },
+  "darkElves":{
+    "name": "Dark Elves",
+    "units": [
+      {
+        "name": "Bleakswords",
+        "size": 3,
+        "cost": 45,
+        "quality": "4+",
+        "attack": "4",
+        "armor": "3",
+        "tough": "3",
+        "equipment": "Swords and Shields (A3)",
+        "special": [],
+        "type": "unit"
+      },
+      {
+        "name": "Dreadspears",
+        "size": 3,
+        "cost": 60,
+        "quality": "4+",
+        "attack": "4",
+        "armor": "3",
+        "tough": "3",
+        "equipment": "Spears and Shields (A3)",
+        "special": [
+          "Spear Wall"
+        ],
+        "type": "unit"
+      },
+      {
+        "name": "Black Guard",
+        "size": 3,
+        "cost": 95,
+        "quality": "3+",
+        "attack": "5",
+        "armor": "3",
+        "tough": "3",
+        "equipment": "Halberds (A3, AP(1))",
+        "special": [],
+        "type": "unit"
+      },
+      {
+        "name": "Dark Riders",
+        "size": 3,
+        "cost": 80,
+        "quality": "4+",
+        "attack": "4",
+        "armor": "3",
+        "tough": "3",
+        "equipment": "Lances (A3)",
+        "special": [
+          "Fast",
+          "Impact(1)"
+        ],
+        "type": "unit"
+      },
+      {
+        "name": "Executioners",
+        "size": 3,
+        "cost": 100,
+        "quality": "4+",
+        "attack": "4",
+        "armor": "4",
+        "tough": "3",
+        "equipment": "Greatswords (A4, AP(2))",
+        "special": [
+          "Frenzy"
+        ],
+        "type": "unit"
+      },
+      {
+        "name": "Cold One Knights",
+        "size": 3,
+        "cost": 100,
+        "quality": "5+",
+        "attack": "4",
+        "armor": "4",
+        "tough": "3",
+        "equipment": "Lances (A4)",
+        "special": [
+          "Fast",
+          "Frenzy",
+          "Impact(1)",
+          "Predators"
+        ],
+        "type": "unit"
+      },
+      {
+        "name": "Cold One Chariots",
+        "size": 3,
+        "cost": 150,
+        "quality": "5+",
+        "attack": "4",
+        "armor": "4",
+        "tough": "4",
+        "equipment": "Claws, Teeth, and Weapons (A4, AP(1))",
+        "special": [
+          "Frenzy",
+          "Impact(2)",
+          "Predators"
+        ],
+        "type": "unit"
+      },
+      {
+        "name": "Witch Elves",
+        "size": 3,
+        "cost": 75,
+        "quality": "4+",
+        "attack": "2",
+        "armor": "4",
+        "tough": "3",
+        "equipment": "Dual Swords (A4)",
+        "special": [
+          "Frenzy",
+          "Furious"
+        ],
+        "type": "unit"
+      },
+      {
+        "name": "Corsairs",
+        "size": 3,
+        "cost": 50,
+        "quality": "4+",
+        "attack": "3/1",
+        "armor": "3",
+        "tough": "3",
+        "equipment": "Swords (A3), Handbows (8\", A1)",
+        "special": [],
+        "type": "unit"
+      },
+      {
+        "name": "Darkshards",
+        "size": 3,
+        "cost": 70,
+        "quality": "4+",
+        "attack": "2/1",
+        "armor": "3",
+        "tough": "3",
+        "equipment": "Hand Weapons (A2), Repeater Crossbows (12\", A1, AP(1))",
+        "special": [
+          "Repeater Crossbows"
+        ],
+        "type": "unit"
+      },
+      {
+        "name": "Reaper Bolt Throwers",
+        "size": 2,
+        "cost": 75,
+        "quality": "4+",
+        "attack": "2/1",
+        "armor": "3",
+        "tough": "2",
+        "equipment": "Crew Weapons (A2), Elven Bolt Thrower (16\", A1, AP(2), Deadly(2))",
+        "special": [
+          "Artillery",
+          "Slow"
+        ],
+        "type": "unit"
+      },
+      {
+        "name": "Manticore",
+        "size": 1,
+        "cost": 100,
+        "quality": "4+",
+        "attack": "5",
+        "armor": "5",
+        "tough": "4",
+        "equipment": "Large Claws and Teeth (A5, AP(1))",
+        "special": [
+          "Fear",
+          "Fearless",
+          "Flying",
+          "Frenzy",
+          "Terrifying"
+        ],
+        "type": "unit"
+      },
+      {
+        "name": "War Hyrda",
+        "size": 1,
+        "cost": 150,
+        "quality": "4+",
+        "attack": "6/2",
+        "armor": "4",
+        "tough": "6",
+        "equipment": "Large Claws and Teeth (A6, AP(1)), Breath Attack (8\", A2, AP(1))",
+        "special": [
+          "Fear",
+          "Fearless",
+          "Furious",
+          "Regeneration",
+          "Terrifying"
+        ],
+        "type": "unit"
+      },
+      {
+        "name": "Black Dragon",
+        "size": 1,
+        "cost": 300,
+        "quality": "3+",
+        "attack": "6/3",
+        "armor": "5",
+        "tough": "5",
+        "equipment": "Massive Claws and Teeth (A6, AP(2), Deadly(2)), Breath Attack (8\", A3, AP(1))",
+        "special": [
+          "Fear",
+          "Fearless",
+          "Flying",
+          "Terrifying"
+        ],
+        "type": "unit"
+      },
+      {
+        "name": "Master",
+        "size": 1,
+        "cost": 75,
+        "quality": "4+",
+        "attack": "2",
+        "armor": "0",
+        "tough": "1",
+        "equipment": "",
+        "special": [
+          "Hero"
+        ],
+        "type": "hero"
+      },
+      {
+        "name": "Sorceress",
+        "size": 1,
+        "cost": 100,
+        "quality": "3+",
+        "attack": "0",
+        "armor": "0",
+        "tough": "1",
+        "equipment": "",
+        "special": [
+          "Hero",
+          "Wizard(1)"
+        ],
+        "type": "hero"
+      },
+      {
+        "name": "Supreme Sorceress",
+        "size": 1,
+        "cost": 100,
+        "quality": "2+",
+        "attack": "0",
+        "armor": "0",
+        "tough": "2",
+        "equipment": "",
+        "special": [
+          "Cauldron of Blood",
+          "Wizard(2)"
+        ],
+        "type": "hero"
+      },
+      {
+        "name": "Dreadlord",
+        "size": 1,
+        "cost": 200,
+        "quality": "2+",
+        "attack": "3",
+        "armor": "0",
+        "tough": "3",
+        "equipment": "",
+        "special": [
+          "Hero"
+        ],
+        "type": "hero"
+      }
+    ],
+    "spells": [
+      {
+        "name": "Darkness",
+        "difficulty": "3+",
+        "effect": "Target enemy unit takes a moral test."
+      },
+      {
+        "name": "Pain",
+        "difficulty": "3+",
+        "effect": "Target enemy model suffers -2 melee and shooting attacks this turn."
+      },
+      {
+        "name": "Dominion",
+        "difficulty": "4+",
+        "effect": "Target enemy unit is moved 4\" in any direction. Controller player may pivot the unit after this move."
+      },
+      {
+        "name": "Doom Bolt",
+        "difficulty": "4+",
+        "effect": "Draw a line from the caster 12\" out. Each unit the line passes through suffers 1 hit."
+      },
+      {
+        "name": "Black Horror",
+        "difficulty": "5+",
+        "effect": "Target unit within 12\" and 4 or less armor is."
+      },
+      {
+        "name": "Soul Steal",
+        "difficulty": "5+",
+        "effect": "Target model within 4\" suffers a number of hits equal to it's Toughness, minus 1."
+      }
+    ]
   }
 }
